@@ -29,3 +29,13 @@ h1 {
 h2 {
   font-size: 22px;
 }
+
+.directorName a {
+  color : #424242;
+  text-decoration: none;
+}
+
+.directorName hover {
+  color : #eb3323;
+  text-decoration: none;
+}
