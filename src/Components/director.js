@@ -13,41 +13,43 @@ export default class Director extends React.Component {
         <div style={styles.pictoBack}>
           <img style={{width : '30px'}} src="/images/back.jpg"/>
         </div>
-        <div style={styles.directorInfos}>
-          <h1>Ada Sokol.</h1>
-          <div style={styles.pictosLinks}>
-            Web - Insta - Vimeo
-          </div>
-          <div style={styles.directorData}>
-            <div>
-              <ul>
-                <li>Localisation.</li>
-                <li>Category.</li>
-                <li>Subcategories.</li>
-                <li>Situation.</li>
-                <li>Content.</li>
-                <li>Profil.</li>
-                <li>Mail.</li>
-                <li>Mob.</li>
-              </ul>
+        <div style={styles.directorMain}>
+          <div style={styles.directorInfos}>
+            <h1>Ada Sokol.</h1>
+            <div style={styles.pictosLinks}>
+              Web - Insta - Vimeo
             </div>
-            <div>
-              <ul>
-                <li>Paris</li>
-                <li>CGI</li>
-                <li>Luxe, Visuel</li>
-                <li>Free</li>
-                <li>Yes</li>
-                <li>Print, Film</li>
-                <li>mail@adasokol.com</li>
-                <li>+33 6 45 20 37 74</li>
-              </ul>
+            <div style={styles.directorData}>
+              <div>
+                <ul>
+                  <li>Localisation.</li>
+                  <li>Category.</li>
+                  <li>Subcategories.</li>
+                  <li>Situation.</li>
+                  <li>Content.</li>
+                  <li>Profil.</li>
+                  <li>Mail.</li>
+                  <li>Mob.</li>
+                </ul>
+              </div>
+              <div>
+                <ul>
+                  <li>Paris</li>
+                  <li>CGI</li>
+                  <li>Luxe, Visuel</li>
+                  <li>Free</li>
+                  <li>Yes</li>
+                  <li>Print, Film</li>
+                  <li>mail@adasokol.com</li>
+                  <li>+33 6 45 20 37 74</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <div style={styles.directorVideos}>
-          <h2>Videos</h2>
-          <iframe src="https://player.vimeo.com/video/339559799?color=ffffff&title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+          <div style={styles.directorVideos}>
+            <h2>Videos</h2>
+            <iframe src="https://player.vimeo.com/video/339559799?color=ffffff&title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+          </div>
         </div>
       </ReactiveBase>
       </div>
@@ -69,9 +71,17 @@ var styles = {
     alignItems : 'center'
   },
   directorInfos : {
-
+    width : '40vw',
+    display : 'flex',
+    flexDirection : 'column',
+    alignItems : 'center'
+  },
+  directorMain : {
+    display : 'flex',
   },
   directorVideos : {
-    backgroundColor : 'black'
+    backgroundColor : 'black',
+    width : '60vw',
+    height : '100vh'
   }
 }

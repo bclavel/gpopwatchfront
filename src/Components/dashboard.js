@@ -195,7 +195,7 @@ var styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent : 'center',
-    fontSize: '18px',
+    fontSize: '16px',
     marginRight : '10px'
   },
   directorName : {
@@ -217,7 +217,8 @@ var styles = {
     textAlign: 'center',
     height : '30px',
     paddingTop : '8px',
-    marginBottom: '5px'
+    marginBottom: '5px',
+    fontSize : '16px'
   },
   directorLoca : {
     width: '15vw',
