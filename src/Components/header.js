@@ -12,7 +12,7 @@ export default class Header extends React.Component {
           </div>
           <DataSearch
             componentId = "mainSearch"
-            dataField = {["fistName", "lastName"]}
+            dataField = {["firstName", "lastName"]}
             className = "search-bar"
             queryFormat = "and"
             placeholder = "Rechercher un réalisateur"

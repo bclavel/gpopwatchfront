@@ -39,3 +39,16 @@ h2 {
   color : #eb3323;
   text-decoration: none;
 }
+
+.directorLinks a {
+  color : #424242;
+}
+
+.directorLinks hover {
+  color : #424242;
+  text-decoration: none;
+}
+
+.leftSingleDropdownList {
+  margin-top: 15px;
+}

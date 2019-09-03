@@ -55,21 +55,25 @@ export default class Dashboard extends React.Component {
               componentId="subcategoriesSensor"
               dataField="subcategories.keyword"
               title="Sub categories"
+              className='leftSingleDropdownList'
             />
             <SingleDropdownList
               componentId="localisationSensor"
               dataField="localisation.keyword"
               title="Localisation"
+              className='leftSingleDropdownList'
             />
             <SingleDropdownList
               componentId="contentSensor"
               dataField="content.keyword"
               title="Content"
+              className='leftSingleDropdownList'
             />
             <SingleDropdownList
               componentId="situationSensor"
               dataField="situation.keyword"
               title="Situation"
+              className='leftSingleDropdownList'
             />
             <SelectedFilters />
           </div>
@@ -79,7 +83,10 @@ export default class Dashboard extends React.Component {
                 Directors.
               </div>
               <div style={{...styles.directorCat, ...styles.bold}}>
-                Catégory.
+                Category.
+              </div>
+              <div style={{...styles.directorSubCat, ...styles.bold}}>
+                Subcategories.
               </div>
               <div style={{...styles.directorLoca, ...styles.bold}}>
                 Localisation.
@@ -94,18 +101,18 @@ export default class Dashboard extends React.Component {
             <div style={styles.results}>
               <ReactiveList
                 componentId="searchResult"
-                dataField="lastName.keyword"
+                dataField="firstName.keyword"
                 stream={true}
                 pagination={false}
                 paginationAt="bottom"
-                pages={5}
-                sortBy="desc"
+                pages={15}
+                sortBy="asc"
                 size={10}
                 loader="Loading Results.."
                 showResultStats={false}
                 renderItem={this.RealReactiveList}
                 react={{
-                    and: ["mainSearch", "countrySensor", "categoriesList"]
+                    and: ["mainSearch", "categoriesList", "localisationSensor", "situationSensor", "contentSensor", "subcategoriesSensor"]
                 }}
               />
             </div>
@@ -118,10 +125,15 @@ export default class Dashboard extends React.Component {
 
   RealReactiveList(data) {
     console.log("RealReactiveList data >>>", data);
-    var directorDOP, directorFilm, directorPrint
+    var directorDOP, directorFilm, directorPrint, directorSubCat, directorVimeo, directorSite, directorInsta
     directorPrint = (data.print ? "Print" : '' )
     directorFilm = (data.film ? "Film" : '' )
     directorDOP = (data.DOP ? "DOP" : '' )
+    directorSubCat = data.subcategories.join(' ')
+    directorVimeo = (data.vimeo ? <a href={data.vimeo} target='blank'>Vimeo</a> : null)
+    directorSite = (data.website ? <a href={data.website} target='blank'>Site</a> : null)
+    directorInsta = (data.instagram ? <a href={data.instagram} target='blank'>Insta</a> : null)
+
     return(
       <div key={data._id} style={styles.directorRow}>
         <div className='directorName' style={styles.directorName}>
@@ -130,11 +142,14 @@ export default class Dashboard extends React.Component {
         <div style={styles.directorCat}>
           {data.category}
         </div>
+        <div style={styles.directorCat}>
+          {directorSubCat}
+        </div>
         <div style={styles.directorLoca}>
           {data.localisation}
         </div>
-        <div style={styles.directorLinks}>
-          <a href={data.vimeo} target='blank'>V</a> <a href={data.instagram} target='blank'>I</a>
+        <div style={styles.directorLinks} className='directorLinks'>
+          {directorSite} {directorVimeo} {directorInsta}
         </div>
         <div style={styles.directorType}>
           {directorPrint} {directorFilm} {directorDOP}
@@ -161,7 +176,7 @@ var styles = {
   filters : {
     display : 'flex',
     flexDirection : 'column',
-    width : '25vw',
+    width : '15vw',
     marginRight : '20px',
     marginLeft : '30px'
   },
@@ -176,41 +191,54 @@ var styles = {
     marginTop : '80px'
   },
   directorRow : {
-    width: '60vw',
+    width: '80vw',
     display: 'flex',
     flexDirection: 'row',
     justifyContent : 'center',
-    fontSize: '18px'
+    fontSize: '18px',
+    marginRight : '10px'
   },
   directorName : {
-    width: '16vw',
+    width: '20vw',
     textAlign: 'center',
     height : '30px',
-    paddingTop : '8px'
+    paddingTop : '8px',
+    marginBottom: '5px'
   },
   directorCat : {
-    width: '12vw',
+    width: '15vw',
     textAlign: 'center',
     height : '30px',
-    paddingTop : '8px'
+    paddingTop : '8px',
+    marginBottom: '5px'
+  },
+  directorSubCat : {
+    width: '15vw',
+    textAlign: 'center',
+    height : '30px',
+    paddingTop : '8px',
+    marginBottom: '5px'
   },
   directorLoca : {
-    width: '12vw',
+    width: '15vw',
     textAlign: 'center',
     height : '30px',
-    paddingTop : '8px'
+    paddingTop : '8px',
+    marginBottom: '5px'
   },
   directorLinks : {
-    width: '8vw',
+    width: '10vw',
     textAlign: 'center',
     height : '30px',
-    paddingTop : '8px'
+    paddingTop : '8px',
+    marginBottom: '5px'
   },
   directorType : {
-    width: '12vw',
+    width: '15vw',
     textAlign: 'center',
     height : '30px',
-    paddingTop : '8px'
+    paddingTop : '8px',
+    marginBottom: '5px'
   },
   directorTitle : {
     borderBottom : '2px solid black'
@@ -225,7 +253,7 @@ var styles = {
     height : '40px'
   },
   rightCol : {
-
+    width : "75vw"
   },
   leftCol : {
 
