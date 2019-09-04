@@ -57,3 +57,11 @@ h2 {
 .leftSingleDropdownList {
   margin-top: 15px;
 }
+
+.pictosLinks a {
+  color : #424242;
+}
+
+.directorDataList li {
+  margin-bottom : 10px;
+}

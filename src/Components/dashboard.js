@@ -11,9 +11,6 @@ export default class Dashboard extends React.Component {
       <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a">
         <Header />
         <div style={styles.header}>
-          <div style={styles.pictoBack}>
-            <img style={{width : '30px'}} src="/images/back.jpg"/>
-          </div>
           <div style={styles.h1}>
             <h1>Directors database.</h1>
           </div>
@@ -130,9 +127,9 @@ export default class Dashboard extends React.Component {
     directorFilm = (data.film ? "Film" : '' )
     directorDOP = (data.DOP ? "DOP" : '' )
     directorSubCat = data.subcategories.join(' ')
-    directorVimeo = (data.vimeo ? <a href={data.vimeo} target='blank'>Vimeo</a> : null)
-    directorSite = (data.website ? <a href={data.website} target='blank'>Site</a> : null)
-    directorInsta = (data.instagram ? <a href={data.instagram} target='blank'>Insta</a> : null)
+    directorVimeo = (data.vimeo ? <a href={data.vimeo} target='_blank'>Vimeo</a> : null)
+    directorSite = (data.website ? <a href={data.website} target='_blank'>Site</a> : null)
+    directorInsta = (data.instagram ? <a href={data.instagram} target='_blank'>Insta</a> : null)
 
     return(
       <div key={data._id} style={styles.directorRow}>
@@ -142,7 +139,7 @@ export default class Dashboard extends React.Component {
         <div style={styles.directorCat}>
           {data.category}
         </div>
-        <div style={styles.directorCat}>
+        <div style={styles.directorSubCat}>
           {directorSubCat}
         </div>
         <div style={styles.directorLoca}>
@@ -168,6 +165,7 @@ var styles = {
   },
   h1 : {
     textAlign: 'center',
+    fontFamily : 'Montserrat'
   },
   pictoBack : {
     position: 'absolute',
@@ -195,54 +193,60 @@ var styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent : 'center',
-    fontSize: '16px',
+    fontSize: '15px',
     marginRight : '10px'
   },
   directorName : {
-    width: '20vw',
+    width: '17vw',
     textAlign: 'center',
     height : '30px',
     paddingTop : '8px',
-    marginBottom: '5px'
+    marginBottom: '5px',
+    fontFamily : 'Montserrat'
   },
   directorCat : {
     width: '15vw',
     textAlign: 'center',
     height : '30px',
     paddingTop : '8px',
-    marginBottom: '5px'
+    marginBottom: '5px',
+    fontFamily : 'Montserrat'
   },
   directorSubCat : {
-    width: '15vw',
+    width: '18vw',
     textAlign: 'center',
     height : '30px',
     paddingTop : '8px',
     marginBottom: '5px',
-    fontSize : '16px'
+    fontFamily : 'Montserrat'
   },
   directorLoca : {
     width: '15vw',
     textAlign: 'center',
     height : '30px',
     paddingTop : '8px',
-    marginBottom: '5px'
+    marginBottom: '5px',
+    fontFamily : 'Montserrat'
   },
   directorLinks : {
     width: '10vw',
     textAlign: 'center',
     height : '30px',
     paddingTop : '8px',
-    marginBottom: '5px'
+    marginBottom: '5px',
+    fontFamily : 'Montserrat'
   },
   directorType : {
     width: '15vw',
     textAlign: 'center',
     height : '30px',
     paddingTop : '8px',
-    marginBottom: '5px'
+    marginBottom: '5px',
+    fontFamily : 'Montserrat'
   },
   directorTitle : {
-    borderBottom : '2px solid black'
+    borderBottom : '2px solid black',
+    marginBottom : 15
   },
   preview : {
     position : 'absolute',
