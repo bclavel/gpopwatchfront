@@ -5,6 +5,19 @@ import "../App.css";
 
 export default class Header extends React.Component {
   render() {
+    console.log('currentPage', this.props.currentPage);
+    var navLinkGpop, navLinkSub
+    if (this.props.currentPage == '/') {
+      navLinkGpop = 'navLinksOn'
+      navLinkSub = 'navLinks'
+    } else if (this.props.currentPage == '/submission/') {
+      navLinkGpop = 'navLinks'
+      navLinkSub = 'navLinksOn'
+    } else {
+      console.log('else gro!');
+      navLinkGpop = 'navLinks'
+      navLinkSub = 'navLinks'
+    }
     return (
         <div style={styles.navBar}>
           <div style={styles.navLogo}>
@@ -17,11 +30,11 @@ export default class Header extends React.Component {
             queryFormat = "and"
             placeholder = "Rechercher un réalisateur"
           />
-          <div style={styles.navLinks} className='navLinksOn'>
-            <a href='#'>Talents G-Pop</a>
+          <div style={styles.navLinks} className={navLinkGpop}>
+            <a href='/'>Talents G-Pop</a>
           </div>
-          <div style={styles.navLinks} className='navLinks'>
-            <a href='#'>Submissions</a>
+          <div style={styles.navLinks} className={navLinkSub}>
+            <Link to='/submission'>Submissions</Link>
           </div>
         </div>
     );
