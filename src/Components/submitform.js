@@ -97,16 +97,19 @@ export default function SubmitForm() {
 
   console.log("values", values);
 
-  var subCatList = values.subcategories.split(', ')
-
-  var videoList = [values.video1, values.video2, values.video3, values.video4]
+  var videoList = {
+    videoUrl1 : values.video1,
+    videoUrl2 : values.video2,
+    videoUrl3 : values.video3,
+    videoUrl4 : values.video4
+  }
 
 var handleSubmit = function() {
   console.log('Submit !!!');
-  fetch(`${backEndAddress}/createDirector`, {
+  fetch(`${backEndAddress}/createdirector`, {
    method: 'POST',
    headers: {'Content-Type':'application/x-www-form-urlencoded'},
-   body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${subCatList}&directorTypePrint=${state.print}&directorTypeFilm=${state.film}&directorTypeDop=${state.dop}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorReckitt=${values.reckitt}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideos=${videoList}&`
+   body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorTypePrint=${state.print}&directorTypeFilm=${state.film}&directorTypeDop=${state.dop}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorReckitt=${values.reckitt}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideo2=${values.video2}&directorVideo3=${values.video3}&directorVideo4=${values.video4}`
   })
   .then(function(response) {
     return response.json()
