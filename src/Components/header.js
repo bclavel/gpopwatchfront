@@ -5,7 +5,6 @@ import "../App.css";
 
 export default class Header extends React.Component {
   render() {
-    console.log('currentPage', this.props.currentPage);
     var navLinkGpop, navLinkSub
     if (this.props.currentPage == '/') {
       navLinkGpop = 'navLinksOn'
@@ -14,7 +13,6 @@ export default class Header extends React.Component {
       navLinkGpop = 'navLinks'
       navLinkSub = 'navLinksOn'
     } else {
-      console.log('else gro!');
       navLinkGpop = 'navLinks'
       navLinkSub = 'navLinks'
     }

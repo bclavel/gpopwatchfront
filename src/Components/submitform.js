@@ -117,6 +117,47 @@ var handleSubmit = function() {
   .then(function (data) {
     console.log('CREATE DIRECTOR - fetch data >>', data)
   })
+
+  var appBaseBody = {
+    firstName : values.name,
+    localisation : values.localisation,
+    category : values.category,
+    subcategories : values.subcategories,
+    print : state.print,
+    film : state.film,
+    DOP : state.dop,
+    situation : values.situation,
+    content : values.content,
+    email : values.contactEmail,
+    phone : values.contactPhone,
+    label : values.label,
+    reckitt : values.reckitt,
+    contact : values.contacted,
+    website : values.website,
+    vimeo : values.vimeo,
+    instagram : values.insta,
+    video1 : values.video1,
+    video2 : values.video2,
+    video3 : values.video3,
+    video4 : values.video4
+  }
+
+  console.log("appBaseBody", appBaseBody);
+
+  var appBaseData = JSON.stringify(appBaseBody)
+
+  console.log("appBaseData", appBaseData);
+
+  // TODO : fix impossibilité de pousser ces données chez appBase
+  fetch('scalr.api.appbase.io/gpop-data2/_doc', {
+   method: 'POST',
+   headers: {'Authorization': 'Basic TVJ3UjB1MDZDOmMwOTAzZDQ4LTdiYWQtNGE4Zi1hZTdmLWM1YzFlMGI4YmI5YQ==', 'Content-Type':'application/json'},
+   body: appBaseData
+  })
+  .then(function (response) {
+    console.log('CREATE DIRECTOR - AppBase API fetch response >>', response)
+  })
+
 }
 
   return (

@@ -3,8 +3,83 @@ import { ReactiveBase, MultiList, SingleDropdownList, ReactiveList, SelectedFilt
 import { Link } from "react-router-dom";
 import Header from './header'
 import "../App.css";
+import backEndAddress from '../config';
 
 export default class Director extends React.Component {
+
+  constructor(props) {
+    super(props);
+    console.log('this.props', this.props);
+    this.state = {
+      directorAppbaseId : this.props.match.params.id,
+      directorName : '',
+      directorLoca : '',
+      directorCat : '',
+      directorSubCat : [],
+      directorTypePrint : false,
+      directorTypeFilm : false,
+      directorTypeDop : false,
+      directorSituation : '',
+      directorContent : '',
+      directorContactEmail : '',
+      directorContactPhone: '',
+      directorLabel: '',
+      directorReckitt : '',
+      directorContacted : '',
+      directorWebsite : '',
+      directorVimeo : '',
+      directorInsta : '',
+      directorVideos : [],
+    }
+    console.log('this.state', this.state);
+  }
+
+
+  componentWillMount() {
+    var ctx = this
+    console.log('will mount');
+    console.log('directorAppbaseId', this.state.directorAppbaseId);
+
+    // var directorName = this.state.currentPage.replace('-', ' ')
+    // console.log("directorName", directorName);
+    fetch(`${backEndAddress}/getdirector?directorId=${this.state.directorAppbaseId}`)
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function (data) {
+      console.log('GET DIRECTOR - fetch data >>', data)
+      var subCatData = data.directorSubCat.map((element, i) => {
+        return element.subCatLabel
+      })
+      var subCatString = subCatData.join(' ')
+      console.log(subCatString);
+
+      ctx.setState({
+        directorName : data.directorName,
+        directorAppbaseId : data.directorAppbaseId,
+        directorLoca : data.directorLoca,
+        directorCat : data.directorCat,
+        directorSubCat : subCatString,
+        directorTypePrint : data.directorTypePrint,
+        directorTypeFilm : data.directorTypeFilm,
+        directorTypeDop : data.directorTypeDop,
+        directorSituation : data.directorSituation,
+        directorContent : data.directorContent,
+        directorContactEmail : data.directorContactEmail,
+        directorContactPhone: data.directorContactPhone,
+        directorLabel: data.directorLabel,
+        directorReckitt : data.directorReckitt,
+        directorContacted : data.directorContacted,
+        directorWebsite : data.directorWebsite,
+        directorVimeo : data.directorVimeo,
+        directorInsta : data.directorInsta,
+        // directorVideos : data.directorVideos,
+      })
+    })
+
+  }
+
+
   render() {
     return (
       <div className = "main-container">
@@ -15,9 +90,9 @@ export default class Director extends React.Component {
         </div>
         <div style={styles.directorMain}>
           <div style={styles.directorInfos}>
-            <h1 style={styles.h1}>ADA SOKOL.</h1>
+            <h1 style={styles.h1}>{this.state.directorName}.</h1>
             <div style={styles.pictosLinks} className='pictosLinks'>
-              <a href="https://www.adasokol.com" target="_blank">Site</a> <a href="https://www.instagram.com/ada_sokol/" target="_blank">Insta</a>
+              <a href={this.state.directorWebsite} target="_blank">Site</a> <a href={this.state.directorInsta} target="_blank">Insta</a> <a href={this.state.directorVimeo} target="_blank">Vimeo</a>
             </div>
             <div style={styles.directorData}>
               <div>
@@ -34,14 +109,14 @@ export default class Director extends React.Component {
               </div>
               <div>
                 <ul className='directorDataList' style={styles.directorDataList}>
-                  <li>Paris</li>
-                  <li>CGI</li>
-                  <li>Luxe, Visuel</li>
-                  <li>Free</li>
-                  <li>Yes</li>
-                  <li>Print, Film</li>
-                  <li>mail@adasokol.com</li>
-                  <li>+33 6 45 20 37 74</li>
+                  <li>{this.state.directorLoca}</li>
+                  <li>{this.state.directorCat}</li>
+                  <li>{this.state.directorSubCat}</li>
+                  <li>{this.state.directorSituation}</li>
+                  <li>{this.state.directorContent}</li>
+                  <li>Print {this.state.directorTypePrint}, Film {this.state.directorTypeFilm}, DOP {this.state.directorTypeDop}</li>
+                  <li>{this.state.directorContactEmail}</li>
+                  <li>{this.state.directorContactPhone}</li>
                 </ul>
               </div>
             </div>
@@ -71,7 +146,8 @@ var styles = {
   },
   h1 : {
     marginBottom : '8px',
-    fontFamily : 'Montserrat'
+    fontFamily : 'Montserrat',
+    textTransform : 'uppercase'
   },
   directorData : {
     display : 'flex',
