@@ -111,7 +111,7 @@ export default class Dashboard extends React.Component {
                 paginationAt="bottom"
                 pages={15}
                 sortBy="asc"
-                size={10}
+                size={50}
                 loader="Loading Results.."
                 showResultStats={false}
                 renderItem={this.RealReactiveList}

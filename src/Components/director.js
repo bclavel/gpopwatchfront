@@ -38,10 +38,7 @@ export default class Director extends React.Component {
   componentWillMount() {
     var ctx = this
     console.log('will mount');
-    console.log('directorAppbaseId', this.state.directorAppbaseId);
 
-    // var directorName = this.state.currentPage.replace('-', ' ')
-    // console.log("directorName", directorName);
     fetch(`${backEndAddress}/getdirector?directorName=${this.state.directorName}`)
     .then(function(response) {
       return response.json()
@@ -76,7 +73,6 @@ export default class Director extends React.Component {
         // directorVideos : data.directorVideos,
       })
     })
-
   }
 
 
