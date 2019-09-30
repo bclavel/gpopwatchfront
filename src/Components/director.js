@@ -11,7 +11,6 @@ export default class Director extends React.Component {
     super(props);
     console.log('this.props', this.props);
     this.state = {
-      directorAppbaseId : this.props.match.params.id,
       directorName : this.props.match.params.name,
       directorLoca : '',
       directorCat : '',
@@ -52,7 +51,7 @@ export default class Director extends React.Component {
       console.log(subCatString);
 
       ctx.setState({
-        // directorName : data.directorName,
+        directorName : data.directorName,
         directorAppbaseId : data.directorAppbaseId,
         directorLoca : data.directorLoca,
         directorCat : data.directorCat,
@@ -77,6 +76,7 @@ export default class Director extends React.Component {
 
 
   render() {
+    var directorNameProp = this.state.directorName
     return (
       <div className = "main-container">
       <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a">
@@ -116,7 +116,7 @@ export default class Director extends React.Component {
                 </ul>
               </div>
             </div>
-            <button style={styles.editButton}>Edit</button>
+            <Link to={{pathname : '/submission', state : {directorName : directorNameProp}}}><button style={styles.editButton}>Edit</button></Link>
           </div>
           <div style={styles.directorVideos}>
             <h2 style={styles.videoTitle}>Videos.</h2>

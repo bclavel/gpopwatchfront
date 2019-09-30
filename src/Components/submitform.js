@@ -51,13 +51,20 @@ const categories = [
   {
     value: 'Storytelling',
   },
+  {
+    value: 'Car',
+  },
 ];
 
-export default function SubmitForm() {
+export default function SubmitForm(props) {
   const classes = useStyles();
+
+  console.log('props', props);
+
+  // TODO dynamiser le contenu des champs par les valeurs passées en props
   const [values, setValues] = React.useState({
-    name: '',
-    localisation : '',
+    name: props.directorName,
+    localisation : 'ta mère',
     category : '',
     subcategories : '',
     situation : '',
@@ -75,11 +82,6 @@ export default function SubmitForm() {
     video3 : '',
     video4 : '',
   });
-
-  // componentWillMount() {
-  //   var ctx = this
-  //   console.log('SUBMIT FORM > will mount !');
-  // }
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -103,36 +105,6 @@ export default function SubmitForm() {
     videoUrl3 : values.video3,
     videoUrl4 : values.video4
   }
-
-  var appBaseBody = {
-    firstName : values.name,
-    localisation : values.localisation,
-    category : values.category,
-    subcategories : values.subcategories,
-    print : state.print,
-    film : state.film,
-    DOP : state.dop,
-    situation : values.situation,
-    content : values.content,
-    email : values.contactEmail,
-    phone : values.contactPhone,
-    label : values.label,
-    reckitt : values.reckitt,
-    contact : values.contacted,
-    website : values.website,
-    vimeo : values.vimeo,
-    instagram : values.insta,
-    video1 : values.video1,
-    video2 : values.video2,
-    video3 : values.video3,
-    video4 : values.video4
-  }
-
-  console.log("appBaseBody", appBaseBody);
-
-  var appBaseData = JSON.stringify(appBaseBody)
-
-  console.log("appBaseData", appBaseData);
 
   var handleSubmit = function() {
     console.log('Submit !!!');
