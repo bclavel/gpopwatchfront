@@ -128,7 +128,7 @@ export default class Dashboard extends React.Component {
   }
 
   RealReactiveList(data) {
-    console.log("RealReactiveList data >>>", data);
+    // console.log("RealReactiveList data >>>", data);
     var directorDOP, directorFilm, directorPrint, directorSubCat, directorVimeo, directorSite, directorInsta
     directorPrint = (data.print ? "Print" : '' )
     directorFilm = (data.film ? "Film" : '' )
@@ -141,7 +141,7 @@ export default class Dashboard extends React.Component {
     return(
       <div key={data._id} style={styles.directorRow}>
         <div className='directorName' style={styles.directorName}>
-          <Link to={`/director/${data._id}/${data.firstName}-${data.lastName}`}>{data.firstName} {data.lastName}</Link>
+          <Link to={`/director/${data.name}`}>{data.name}</Link>
         </div>
         <div style={styles.directorCat}>
           {data.category}

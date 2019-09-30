@@ -11,7 +11,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import backEndAddress from '../config';
-// import Countries from '../countries.json'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -53,10 +52,6 @@ const categories = [
     value: 'Storytelling',
   },
 ];
-
-// var countryList = Countries.map((element, i) => {
-//   return Countries[i].name.common
-// })
 
 export default function SubmitForm() {
   const classes = useStyles();
@@ -104,20 +99,6 @@ export default function SubmitForm() {
     videoUrl4 : values.video4
   }
 
-var handleSubmit = function() {
-  console.log('Submit !!!');
-  fetch(`${backEndAddress}/createdirector`, {
-   method: 'POST',
-   headers: {'Content-Type':'application/x-www-form-urlencoded'},
-   body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorTypePrint=${state.print}&directorTypeFilm=${state.film}&directorTypeDop=${state.dop}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorReckitt=${values.reckitt}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideo2=${values.video2}&directorVideo3=${values.video3}&directorVideo4=${values.video4}`
-  })
-  .then(function(response) {
-    return response.json()
-  })
-  .then(function (data) {
-    console.log('CREATE DIRECTOR - fetch data >>', data)
-  })
-
   var appBaseBody = {
     firstName : values.name,
     localisation : values.localisation,
@@ -148,17 +129,20 @@ var handleSubmit = function() {
 
   console.log("appBaseData", appBaseData);
 
-  // TODO : fix impossibilité de pousser ces données chez appBase
-  fetch('scalr.api.appbase.io/gpop-data2/_doc', {
-   method: 'POST',
-   headers: {'Authorization': 'Basic TVJ3UjB1MDZDOmMwOTAzZDQ4LTdiYWQtNGE4Zi1hZTdmLWM1YzFlMGI4YmI5YQ==', 'Content-Type':'application/json'},
-   body: appBaseData
-  })
-  .then(function (response) {
-    console.log('CREATE DIRECTOR - AppBase API fetch response >>', response)
-  })
-
-}
+  var handleSubmit = function() {
+    console.log('Submit !!!');
+    fetch(`${backEndAddress}/createdirector`, {
+     method: 'POST',
+     headers: {'Content-Type':'application/x-www-form-urlencoded'},
+     body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorTypePrint=${state.print}&directorTypeFilm=${state.film}&directorTypeDop=${state.dop}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorReckitt=${values.reckitt}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideo2=${values.video2}&directorVideo3=${values.video3}&directorVideo4=${values.video4}`
+    })
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function (data) {
+      console.log('CREATE DIRECTOR - fetch data >>', data)
+    })
+  }
 
   return (
     <form className={classes.container} autoComplete="off">

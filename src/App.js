@@ -17,7 +17,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route path="/" exact component={Dashboard} />
-            <Route path="/director/:id/:name" component={Director} />
+            <Route path="/director/:name" component={Director} />
             <Route path="/submission/" component={Submission} />
           </Switch>
         </Router>

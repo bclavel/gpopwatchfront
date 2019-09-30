@@ -12,7 +12,7 @@ export default class Director extends React.Component {
     console.log('this.props', this.props);
     this.state = {
       directorAppbaseId : this.props.match.params.id,
-      directorName : '',
+      directorName : this.props.match.params.name,
       directorLoca : '',
       directorCat : '',
       directorSubCat : [],
@@ -42,7 +42,7 @@ export default class Director extends React.Component {
 
     // var directorName = this.state.currentPage.replace('-', ' ')
     // console.log("directorName", directorName);
-    fetch(`${backEndAddress}/getdirector?directorId=${this.state.directorAppbaseId}`)
+    fetch(`${backEndAddress}/getdirector?directorName=${this.state.directorName}`)
     .then(function(response) {
       return response.json()
     })
@@ -55,7 +55,7 @@ export default class Director extends React.Component {
       console.log(subCatString);
 
       ctx.setState({
-        directorName : data.directorName,
+        // directorName : data.directorName,
         directorAppbaseId : data.directorAppbaseId,
         directorLoca : data.directorLoca,
         directorCat : data.directorCat,
