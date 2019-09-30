@@ -23,10 +23,10 @@ export default class Header extends React.Component {
           </div>
           <DataSearch
             componentId = "mainSearch"
-            dataField = {["firstName", "lastName"]}
+            dataField = {["name"]}
             className = "search-bar"
             queryFormat = "and"
-            placeholder = "Rechercher un réalisateur"
+            placeholder = "Search for a director"
           />
           <div style={styles.navLinks} className={navLinkGpop}>
             <a href='/'>Talents G-Pop</a>

@@ -76,10 +76,10 @@ export default function SubmitForm() {
     video4 : '',
   });
 
-  componentWillMount() {
-    var ctx = this
-    console.log('SUBMIT FORM > will mount !');
-  }
+  // componentWillMount() {
+  //   var ctx = this
+  //   console.log('SUBMIT FORM > will mount !');
+  // }
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
