@@ -48,11 +48,9 @@ export default class Director extends React.Component {
         return element.subCatLabel
       })
       var subCatString = subCatData.join(' ')
-      console.log(subCatString);
 
       ctx.setState({
         directorName : data.directorName,
-        directorAppbaseId : data.directorAppbaseId,
         directorLoca : data.directorLoca,
         directorCat : data.directorCat,
         directorSubCat : subCatString,

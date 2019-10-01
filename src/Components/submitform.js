@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -11,29 +11,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import backEndAddress from '../config';
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 600,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
-  printFilmDop : {
-    marginTop : theme.spacing(3),
-    paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-  }
-}));
 
 const categories = [
   {
@@ -61,27 +38,60 @@ export default function SubmitForm(props) {
 
   console.log('props', props);
 
+  var initData = {
+    name: props.name,
+    localisation : props.localisation,
+    category : props.category,
+    subcategories : props.subcategories,
+    situation : props.situation,
+    content : props.content,
+    contactEmail : props.contactEmail,
+    contactPhone : props.contactPhone,
+    label : props.label,
+    reckitt : props.reckitt,
+    contacted : props.contacted,
+    website : props.website,
+    vimeo : props.vimeo,
+    insta : props.insta,
+    video1 : props.video1,
+    video2 : props.video2,
+    video3 : props.video3,
+    video4 : props.video4,
+  }
+
   // TODO dynamiser le contenu des champs par les valeurs passées en props
-  const [values, setValues] = React.useState({
-    name: props.directorName,
-    localisation : 'ta mère',
-    category : '',
-    subcategories : '',
-    situation : '',
-    content : '',
-    contactEmail : '',
-    contactPhone : '',
-    label : '',
-    reckitt : '',
-    contacted : '',
-    website : '',
-    vimeo : '',
-    insta : '',
-    video1 : '',
-    video2 : '',
-    video3 : '',
-    video4 : '',
-  });
+  const [values, setValues] = useState({...initData});
+
+  useEffect(() => {
+    console.log('useEffect Name');
+    setValues({
+      ...values,
+      name: props.name,
+      localisation : props.localisation,
+      category : props.category,
+      subcategories : props.subcategories,
+      situation : props.situation,
+      content : props.content,
+      contactEmail : props.contactEmail,
+      contactPhone : props.contactPhone,
+      label : props.label,
+      reckitt : props.reckitt,
+      contacted : props.contacted,
+      website : props.website,
+      vimeo : props.vimeo,
+      insta : props.insta,
+      video1 : props.video1,
+      video2 : props.video2,
+      video3 : props.video3,
+      video4 : props.video4
+    });
+    setState({
+      ...state,
+      print :  props.print,
+      film :  props.film,
+      dop :  props.dop
+    })
+  }, [initData.name])
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -97,8 +107,6 @@ export default function SubmitForm(props) {
   setState({ ...state, [name]: event.target.checked });
   };
 
-  console.log("values", values);
-
   var videoList = {
     videoUrl1 : values.video1,
     videoUrl2 : values.video2,
@@ -106,19 +114,38 @@ export default function SubmitForm(props) {
     videoUrl4 : values.video4
   }
 
-  var handleSubmit = function() {
-    console.log('Submit !!!');
-    fetch(`${backEndAddress}/createdirector`, {
-     method: 'POST',
-     headers: {'Content-Type':'application/x-www-form-urlencoded'},
-     body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorTypePrint=${state.print}&directorTypeFilm=${state.film}&directorTypeDop=${state.dop}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorReckitt=${values.reckitt}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideo2=${values.video2}&directorVideo3=${values.video3}&directorVideo4=${values.video4}`
-    })
-    .then(function(response) {
-      return response.json()
-    })
-    .then(function (data) {
-      console.log('CREATE DIRECTOR - fetch data >>', data)
-    })
+  console.log("values", values);
+
+  if (props.editMode) {
+    var handleSubmit = function() {
+      console.log('Submit update director');
+      fetch(`${backEndAddress}/updatedirector`, {
+       method: 'POST',
+       headers: {'Content-Type':'application/x-www-form-urlencoded'},
+       body: `oldName=${props.oldName}&directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorTypePrint=${state.print}&directorTypeFilm=${state.film}&directorTypeDop=${state.dop}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorReckitt=${values.reckitt}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideo2=${values.video2}&directorVideo3=${values.video3}&directorVideo4=${values.video4}`
+      })
+      .then(function(response) {
+        return response.json()
+      })
+      .then(function (data) {
+        console.log('UPDATE DIRECTOR - fetch data >>', data)
+      })
+    }
+  } else {
+    var handleSubmit = function() {
+      console.log('Submit create director');
+      fetch(`${backEndAddress}/createdirector`, {
+       method: 'POST',
+       headers: {'Content-Type':'application/x-www-form-urlencoded'},
+       body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorTypePrint=${state.print}&directorTypeFilm=${state.film}&directorTypeDop=${state.dop}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorReckitt=${values.reckitt}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideo2=${values.video2}&directorVideo3=${values.video3}&directorVideo4=${values.video4}`
+      })
+      .then(function(response) {
+        return response.json()
+      })
+      .then(function (data) {
+        console.log('CREATE DIRECTOR - fetch data >>', data)
+      })
+    }
   }
 
   return (
@@ -366,6 +393,28 @@ export default function SubmitForm(props) {
   );
 }
 
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 600,
+  },
+  dense: {
+    marginTop: 19,
+  },
+  menu: {
+    width: 200,
+  },
+  printFilmDop : {
+    marginTop : theme.spacing(3),
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+  }
+}));
 
 var styles = {
   editButton : {
