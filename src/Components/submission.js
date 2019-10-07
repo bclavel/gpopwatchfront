@@ -31,6 +31,10 @@ export default class Submission extends React.Component {
       directorWebsite : '',
       directorVimeo : '',
       directorInsta : '',
+      directorVideo1 : '',
+      directorVideo2 : '',
+      directorVideo3 : '',
+      directorVideo4 : '',
       directorVideos : [],
     }
   }
@@ -52,7 +56,7 @@ export default class Submission extends React.Component {
         var subCatData = data.directorSubCat.map((element, i) => {
           return element.subCatLabel
         })
-        var subCatString = subCatData.join(' ')
+        var subCatString = subCatData.join(', ')
 
         ctx.setState({
           directorName : data.directorName,
@@ -72,7 +76,11 @@ export default class Submission extends React.Component {
           directorWebsite : data.directorWebsite,
           directorVimeo : data.directorVimeo,
           directorInsta : data.directorInsta,
-          directorVideos : data.directorVideos,
+          // directorVideos : data.directorVideos,
+          directorVideo1 : data.directorVideos[0].videoUrl,
+          directorVideo2 : data.directorVideos[1].videoUrl,
+          directorVideo3 : data.directorVideos[2].videoUrl,
+          directorVideo4 : data.directorVideos[3].videoUrl
         })
       })
     }
@@ -104,10 +112,10 @@ export default class Submission extends React.Component {
           website={this.state.directorWebsite}
           vimeo={this.state.directorVimeo}
           insta={this.state.directorInsta}
-          video1={this.state.directorVideos[0]}
-          video2={this.state.directorVideos[1]}
-          video3={this.state.directorVideos[2]}
-          video4={this.state.directorVideos[3]}
+          video1={this.state.directorVideo1}
+          video2={this.state.directorVideo2}
+          video3={this.state.directorVideo3}
+          video4={this.state.directorVideo4}
           />
       </ReactiveBase>
       </div>

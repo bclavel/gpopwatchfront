@@ -59,11 +59,10 @@ export default function SubmitForm(props) {
     video4 : props.video4,
   }
 
-  // TODO dynamiser le contenu des champs par les valeurs passées en props
   const [values, setValues] = useState({...initData});
 
   useEffect(() => {
-    console.log('useEffect Name');
+    console.log('useEffect props', props);
     setValues({
       ...values,
       name: props.name,
