@@ -8,8 +8,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Checkbox from '@material-ui/core/Checkbox';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import backEndAddress from '../config';
 
 const categories = [
@@ -31,65 +29,101 @@ const categories = [
   {
     value: 'Car',
   },
+  {
+    value: 'Not specialized',
+  },
+];
+
+const profiles = [
+  {
+    value: 'Director',
+  },
+  {
+    value: 'Photographer',
+  },
+  {
+    value: 'DOP',
+  },
+  {
+    value: 'Stylist',
+  },
+  {
+    value: 'Hair',
+  },
+  {
+    value: 'Makeup',
+  },
+  {
+    value: 'Set designer',
+  },
 ];
 
 export default function SubmitForm(props) {
   const classes = useStyles();
-
-  console.log('props', props);
-
   var initData = {
     name: props.name,
     localisation : props.localisation,
     category : props.category,
     subcategories : props.subcategories,
+    // profiles : props.profiles,
     situation : props.situation,
     content : props.content,
     contactEmail : props.contactEmail,
     contactPhone : props.contactPhone,
     label : props.label,
-    reckitt : props.reckitt,
+    // reckitt : props.reckitt,
     contacted : props.contacted,
     website : props.website,
     vimeo : props.vimeo,
     insta : props.insta,
     video1 : props.video1,
+    videoSource1: props.videoSource1,
     video2 : props.video2,
+    videoSource2: props.videoSource2,
     video3 : props.video3,
+    videoSource3: props.videoSource3,
     video4 : props.video4,
+    videoSource4: props.videoSource4,
   }
 
   const [values, setValues] = useState({...initData});
 
   useEffect(() => {
-    console.log('useEffect props', props);
     setValues({
       ...values,
       name: props.name,
       localisation : props.localisation,
       category : props.category,
       subcategories : props.subcategories,
+      // profiles : props.profiles,
       situation : props.situation,
       content : props.content,
       contactEmail : props.contactEmail,
       contactPhone : props.contactPhone,
       label : props.label,
-      reckitt : props.reckitt,
+      // reckitt : props.reckitt,
       contacted : props.contacted,
       website : props.website,
       vimeo : props.vimeo,
       insta : props.insta,
       video1 : props.video1,
+      videoSource1: props.videoSource1,
       video2 : props.video2,
+      videoSource2: props.videoSource2,
       video3 : props.video3,
-      video4 : props.video4
+      videoSource3: props.videoSource3,
+      video4 : props.video4,
+      videoSource4: props.videoSource4
     });
-    setState({
-      ...state,
-      print :  props.print,
-      film :  props.film,
-      dop :  props.dop
+
+    let profilesTmp = {}
+    props.profiles.map(item => {
+      profilesTmp[item] = true
+      return {
+        profilesTmp,
+      }
     })
+    setState({profilesTmp})
   }, [initData.name])
 
   const handleChange = name => event => {
@@ -97,23 +131,33 @@ export default function SubmitForm(props) {
   };
 
   const [state, setState] = React.useState({
-    print :  false,
-    film :  false,
-    dop :  false,
+    director: false,
+    photographer: false,
+    dop: false,
+    stylist: false,
+    hair: false,
+    makeup: false,
+    set: false
+  });
+
+  const [profiles, setProfiles] = React.useState({
+    profiles: []
   });
 
   const handleChangeSelect = name => event => {
-  setState({ ...state, [name]: event.target.checked });
+    setState({ ...state, [name]: event.target.checked });
+
+    let profilesTmp = [...profiles]
+    profilesTmp.push(name)
+    setProfiles({profiles: profilesTmp})
   };
 
-  var videoList = {
-    videoUrl1 : values.video1,
-    videoUrl2 : values.video2,
-    videoUrl3 : values.video3,
-    videoUrl4 : values.video4
-  }
-
-  console.log("values", values);
+  // var videoList = {
+  //   videoUrl1 : values.video1,
+  //   videoUrl2 : values.video2,
+  //   videoUrl3 : values.video3,
+  //   videoUrl4 : values.video4
+  // }
 
   if (props.editMode) {
     var handleSubmit = function() {
@@ -121,7 +165,7 @@ export default function SubmitForm(props) {
       fetch(`${backEndAddress}/updatedirector`, {
        method: 'POST',
        headers: {'Content-Type':'application/x-www-form-urlencoded'},
-       body: `oldName=${props.oldName}&directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorTypePrint=${state.print}&directorTypeFilm=${state.film}&directorTypeDop=${state.dop}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorReckitt=${values.reckitt}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideo2=${values.video2}&directorVideo3=${values.video3}&directorVideo4=${values.video4}`
+       body: `oldName=${props.oldName}&directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorProfile=${values.profiles}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideoSource1=${values.videoSource1}&directorVideo2=${values.video2}&directorVideoSource2=${values.videoSource2}&directorVideo3=${values.video3}&directorVideoSource3=${values.videoSource3}&directorVideo4=${values.video4}&directorVideoSource4=${values.videoSource4}`
       })
       .then(function(response) {
         return response.json()
@@ -136,7 +180,7 @@ export default function SubmitForm(props) {
       fetch(`${backEndAddress}/createdirector`, {
        method: 'POST',
        headers: {'Content-Type':'application/x-www-form-urlencoded'},
-       body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorTypePrint=${state.print}&directorTypeFilm=${state.film}&directorTypeDop=${state.dop}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorReckitt=${values.reckitt}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideo2=${values.video2}&directorVideo3=${values.video3}&directorVideo4=${values.video4}`
+       body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorProfile=${values.profiles}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideoSource1=${values.videoSource1}&directorVideo2=${values.video2}&directorVideoSource2=${values.videoSource2}&directorVideo3=${values.video3}&directorVideoSource3=${values.videoSource3}&directorVideo4=${values.video4}&directorVideoSource4=${values.videoSource4}`
       })
       .then(function(response) {
         return response.json()
@@ -178,6 +222,26 @@ export default function SubmitForm(props) {
         </MenuItem>
       ))}
       </TextField>
+      {/* <TextField
+        id="profiles"
+        label="Profiles"
+        select
+        className={classes.textField}
+        value={values.profiles}
+        onChange={handleChange('profiles')}
+        SelectProps={{
+          MenuProps: {
+            className: classes.menu,
+          },
+        }}
+        margin="normal"
+      >
+      {profiles.map(option => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.value}
+        </MenuItem>
+      ))}
+      </TextField> */}
       <TextField
         id="subcategories"
         label="Sub categories"
@@ -188,25 +252,49 @@ export default function SubmitForm(props) {
       />
       <div style={{width : 600, marginTop : 16}}>
       <FormControl component="fieldset">
-        <FormLabel component="legend">Director type</FormLabel>
+        <FormLabel component="legend">Talent profile</FormLabel>
         <FormGroup row>
          <FormControlLabel className={classes.printFilmDop}
            control={
-             <Checkbox checked={state.print} onChange={handleChangeSelect('print')} value="print" />
+             <Checkbox checked={state.director} onChange={handleChangeSelect('director')} value="director" />
            }
-           label="Print"
+           label="Director"
          />
          <FormControlLabel className={classes.printFilmDop}
            control={
-             <Checkbox checked={state.film} onChange={handleChangeSelect('film')} value="film" />
+             <Checkbox checked={state.photographer} onChange={handleChangeSelect('photographer')} value="photographer" />
            }
-           label="Film"
+           label="Photographer"
          />
          <FormControlLabel className={classes.printFilmDop}
            control={
              <Checkbox checked={state.dop} onChange={handleChangeSelect('dop')} value="dop" />
            }
            label="DOP"
+         />
+         <FormControlLabel className={classes.printFilmDop}
+           control={
+             <Checkbox checked={state.stylist} onChange={handleChangeSelect('stylist')} value="stylist" />
+           }
+           label="Stylist"
+         />
+         <FormControlLabel className={classes.printFilmDop}
+           control={
+             <Checkbox checked={state.hair} onChange={handleChangeSelect('hair')} value="hair" />
+           }
+           label="Hair"
+         />
+         <FormControlLabel className={classes.printFilmDop}
+           control={
+             <Checkbox checked={state.makeup} onChange={handleChangeSelect('makeup')} value="makeup" />
+           }
+           label="Makeup"
+         />
+         <FormControlLabel className={classes.printFilmDop}
+           control={
+             <Checkbox checked={state.set} onChange={handleChangeSelect('set')} value="set" />
+           }
+           label="Set designer"
          />
         </FormGroup>
       </FormControl>
@@ -330,7 +418,7 @@ export default function SubmitForm(props) {
           {'No'}
         </MenuItem>
       </TextField>
-      <TextField
+      {/* <TextField
         id="reckitt"
         label="Reckitt"
         select
@@ -350,40 +438,132 @@ export default function SubmitForm(props) {
         <MenuItem key='no' value={false}>
           {'No'}
         </MenuItem>
-      </TextField>
+      </TextField> */}
       <h2 style={{textAlign : 'center', marginTop : 40}}>Videos</h2>
-      <TextField
-        id="video1"
-        label="Video #1"
-        className={classes.textField}
-        value={values.video1}
-        onChange={handleChange('video1')}
-        margin="normal"
-      />
-      <TextField
-        id="video2"
-        label="Video #2"
-        className={classes.textField}
-        value={values.video2}
-        onChange={handleChange('video2')}
-        margin="normal"
-      />
-      <TextField
-        id="video3"
-        label="Video #3"
-        className={classes.textField}
-        value={values.video3}
-        onChange={handleChange('video3')}
-        margin="normal"
-      />
-      <TextField
-        id="video4"
-        label="Video #4"
-        className={classes.textField}
-        value={values.video4}
-        onChange={handleChange('video4')}
-        margin="normal"
-      />
+      <div>
+        <TextField
+          id="video1"
+          label="Video #1"
+          className={classes.videoField}
+          value={values.video1}
+          onChange={handleChange('video1')}
+          margin="normal"
+        />
+        <TextField
+          id="videoSource1"
+          label="Source"
+          select
+          className={classes.videoSourceField}
+          value={values.videoSource1}
+          onChange={handleChange('videoSource1')}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          margin="normal"
+          >
+          <MenuItem key='yes' value={true}>
+            {'Vimeo'}
+          </MenuItem>
+          <MenuItem key='no' value={false}>
+            {'Youtube'}
+          </MenuItem>
+        </TextField>
+      </div>
+      <div>
+        <TextField
+          id="video2"
+          label="Video #2"
+          className={classes.videoField}
+          value={values.video2}
+          onChange={handleChange('video2')}
+          margin="normal"
+        />
+        <TextField
+          id="videoSource2"
+          label="Source"
+          select
+          className={classes.videoSourceField}
+          value={values.videoSource2}
+          onChange={handleChange('videoSource2')}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          margin="normal"
+          >
+          <MenuItem key='yes' value={true}>
+            {'Vimeo'}
+          </MenuItem>
+          <MenuItem key='no' value={false}>
+            {'Youtube'}
+          </MenuItem>
+        </TextField>
+      </div>
+      <div>
+        <TextField
+          id="video3"
+          label="Video #3"
+          className={classes.videoField}
+          value={values.video3}
+          onChange={handleChange('video3')}
+          margin="normal"
+        />
+        <TextField
+          id="videoSource3"
+          label="Source"
+          select
+          className={classes.videoSourceField}
+          value={values.videoSource3}
+          onChange={handleChange('videoSource3')}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          margin="normal"
+          >
+          <MenuItem key='yes' value={true}>
+            {'Vimeo'}
+          </MenuItem>
+          <MenuItem key='no' value={false}>
+            {'Youtube'}
+          </MenuItem>
+        </TextField>
+      </div>
+      <div>
+        <TextField
+          id="video4"
+          label="Video #4"
+          className={classes.videoField}
+          value={values.video4}
+          onChange={handleChange('video4')}
+          margin="normal"
+        />
+        <TextField
+          id="videoSource1"
+          label="Source"
+          select
+          className={classes.videoSourceField}
+          value={values.videoSource4}
+          onChange={handleChange('videoSource4')}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          margin="normal"
+          >
+          <MenuItem key='yes' value={true}>
+            {'Vimeo'}
+          </MenuItem>
+          <MenuItem key='no' value={false}>
+            {'Youtube'}
+          </MenuItem>
+        </TextField>
+      </div>
       <div style={{width : '600px', textAlign : 'right' }}>
         <button style={styles.editButton} onClick={handleSubmit}>Submit</button>
       </div>
@@ -401,6 +581,16 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 600,
+  },
+  videoField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 434,
+  },
+  videoSourceField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 150,
   },
   dense: {
     marginTop: 19,

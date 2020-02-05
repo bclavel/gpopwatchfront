@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactiveBase, MultiList, SingleDropdownList, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
+import { ReactiveBase } from '@appbaseio/reactivesearch';
 import { Link } from "react-router-dom";
 import Header from './header'
 import "../App.css";
@@ -9,7 +9,6 @@ export default class Director extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('this.props', this.props);
     this.state = {
       directorName : this.props.match.params.name,
       directorLoca : '',
@@ -23,21 +22,18 @@ export default class Director extends React.Component {
       directorContactEmail : '',
       directorContactPhone: '',
       directorLabel: '',
-      directorReckitt : '',
+      // directorReckitt : '',
       directorContacted : '',
       directorWebsite : '',
       directorVimeo : '',
       directorInsta : '',
       directorVideos : [],
     }
-    console.log('this.state', this.state);
   }
 
 
   componentWillMount() {
     var ctx = this
-    console.log('will mount');
-
     fetch(`${backEndAddress}/getdirector?directorName=${this.state.directorName}`)
     .then(function(response) {
       return response.json()
@@ -62,25 +58,35 @@ export default class Director extends React.Component {
         directorContactEmail : data.directorContactEmail,
         directorContactPhone: data.directorContactPhone,
         directorLabel: data.directorLabel,
-        directorReckitt : data.directorReckitt,
+        // directorReckitt : data.directorReckitt,
         directorContacted : data.directorContacted,
         directorWebsite : data.directorWebsite,
         directorVimeo : data.directorVimeo,
         directorInsta : data.directorInsta,
-        // directorVideos : data.directorVideos,
+        directorVideos : data.directorVideos,
       })
     })
   }
 
+  extractVideoID = (url) => {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    if ( match && match[7].length === 11 ){
+        return match[7];
+    }else{
+        alert("Could not extract video ID.");
+    }
+  }
 
   render() {
+    console.log('DIRECTOR states', this.state);
     var directorNameProp = this.state.directorName
     return (
       <div className = "main-container">
       <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a">
         <Header />
         <div style={styles.pictoBack}>
-          <Link to='/'><img style={{width : '30px'}} src="/images/back.jpg"/></Link>
+          <Link to='/'><img style={{width : '30px'}} src="/images/back.jpg" alt="Back"/></Link>
         </div>
         <div style={styles.directorMain}>
           <div style={styles.directorInfos}>
@@ -119,7 +125,13 @@ export default class Director extends React.Component {
           <div style={styles.directorVideos}>
             <h2 style={styles.videoTitle}>Videos.</h2>
             <div style={styles.videoContent}>
-            <iframe src="https://player.vimeo.com/video/339559799?color=ffffff&title=0&byline=0&portrait=0" width="800" height="450" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              {this.state.directorVideos.map((item, i) => {
+                if (item.videoSource === 'Youtube' && item.videoUrl !== '') {
+                  var videoUrl = this.extractVideoID(item.videoUrl)
+                  return <iframe width="560" height="315" src={`https://www.youtube.com/embed/${videoUrl}`} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                }
+              }
+              )}
             </div>
           </div>
         </div>

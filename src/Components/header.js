@@ -6,10 +6,10 @@ import "../App.css";
 export default class Header extends React.Component {
   render() {
     var navLinkGpop, navLinkSub
-    if (this.props.currentPage == '/') {
+    if (this.props.currentPage === '/') {
       navLinkGpop = 'navLinksOn'
       navLinkSub = 'navLinks'
-    } else if (this.props.currentPage == '/submission/') {
+    } else if (this.props.currentPage === '/submission/') {
       navLinkGpop = 'navLinks'
       navLinkSub = 'navLinksOn'
     } else {

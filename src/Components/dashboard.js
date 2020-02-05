@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactiveBase, MultiList, SingleDropdownList, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
+import { ReactiveBase, MultiList, SingleDropdownList, MultiDropdownList, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
 import { Link } from "react-router-dom";
 import Header from './header'
 import "../App.css";
@@ -19,7 +19,7 @@ export default class Dashboard extends React.Component {
         <Header currentPage={this.state.currentPage}/>
         <div style={styles.header}>
           <div style={styles.h1}>
-            <h1>Directors database.</h1>
+            <h1>Talents database.</h1>
           </div>
         </div>
         <div style={styles.mainContainer}>
@@ -55,17 +55,26 @@ export default class Dashboard extends React.Component {
                 }}
               />
             </div>
-            <SingleDropdownList
+            <MultiDropdownList
+              componentId="subcategoriesSensor"
+              dataField="subcategories.keyword"
+              title="Profile"
+            />
+            <MultiDropdownList
+              componentId="subcategoriesSensor"
+              dataField="subcategories.keyword"
+              title="Sub categories"
+            />
+            {/* <SingleDropdownList
               componentId="subcategoriesSensor"
               dataField="subcategories.keyword"
               title="Sub categories"
               className='leftSingleDropdownList'
-            />
-            <SingleDropdownList
+            /> */}
+            <MultiDropdownList
               componentId="localisationSensor"
               dataField="localisation.keyword"
               title="Localisation"
-              className='leftSingleDropdownList'
             />
             <SingleDropdownList
               componentId="contentSensor"
@@ -73,11 +82,10 @@ export default class Dashboard extends React.Component {
               title="Content"
               className='leftSingleDropdownList'
             />
-            <SingleDropdownList
+            <MultiDropdownList
               componentId="situationSensor"
               dataField="situation.keyword"
               title="Situation"
-              className='leftSingleDropdownList'
             />
             <SelectedFilters />
           </div>
@@ -85,6 +93,9 @@ export default class Dashboard extends React.Component {
             <div style={{...styles.directorRow, ...styles.directorTitle}}>
               <div style={{...styles.directorName, ...styles.bold}}>
                 Directors.
+              </div>
+              <div style={{...styles.directorCat, ...styles.bold}}>
+                Profile.
               </div>
               <div style={{...styles.directorCat, ...styles.bold}}>
                 Category.
@@ -98,9 +109,9 @@ export default class Dashboard extends React.Component {
               <div style={{...styles.directorLinks, ...styles.bold}}>
                 Links.
               </div>
-              <div style={{...styles.directorType, ...styles.bold}}>
+              {/* <div style={{...styles.directorType, ...styles.bold}}>
                 Print/Film/DOP.
-              </div>
+              </div> */}
             </div>
             <div style={styles.results}>
               <ReactiveList
@@ -128,7 +139,6 @@ export default class Dashboard extends React.Component {
   }
 
   RealReactiveList(data) {
-    // console.log("RealReactiveList data >>>", data);
     var directorDOP, directorFilm, directorPrint, directorSubCat, directorVimeo, directorSite, directorInsta
     directorPrint = (data.print ? "Print" : '' )
     directorFilm = (data.film ? "Film" : '' )
@@ -144,6 +154,9 @@ export default class Dashboard extends React.Component {
           <Link to={`/director/${data.name}`}>{data.name}</Link>
         </div>
         <div style={styles.directorCat}>
+          {}
+        </div>
+        <div style={styles.directorCat}>
           {data.category}
         </div>
         <div style={styles.directorSubCat}>
@@ -155,9 +168,9 @@ export default class Dashboard extends React.Component {
         <div style={styles.directorLinks} className='directorLinks'>
           {directorSite} {directorVimeo} {directorInsta}
         </div>
-        <div style={styles.directorType}>
+        {/* <div style={styles.directorType}>
           {directorPrint} {directorFilm} {directorDOP}
-        </div>
+        </div> */}
       </div>
     )
   }
