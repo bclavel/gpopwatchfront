@@ -16,15 +16,11 @@ export default class Submission extends React.Component {
       directorCat : '',
       directorSubCat : [],
       directorProfile: [],
-      // directorTypePrint : false,
-      // directorTypeFilm : false,
-      // directorTypeDop : false,
       directorSituation : '',
       directorContent : '',
       directorContactEmail : '',
       directorContactPhone: '',
-      directorLabel: '',
-      // directorReckitt : '',
+      // directorLabel: '',
       directorContacted : '',
       directorWebsite : '',
       directorVimeo : '',
@@ -42,7 +38,7 @@ export default class Submission extends React.Component {
 
   componentWillMount() {
     var ctx = this
-    // console.log('SUBMISSION states', this.state);
+    console.log('SUBMISSION states', this.state);
     // console.log('SUBMISSION props', this.props);
 
     if (this.props.location.state) {
@@ -58,6 +54,8 @@ export default class Submission extends React.Component {
         })
         var subCatString = subCatData.join(', ')
 
+        var profileData = data.directorProfile.map(item => item.profileLabel)
+
         // var profileData = data.directorProfile.map(item => {
         //   return item.profileLabel
         // })
@@ -68,16 +66,12 @@ export default class Submission extends React.Component {
           directorLoca: data.directorLoca,
           directorCat: data.directorCat,
           directorSubCat: subCatString,
-          directorProfile: data.directorProfile,
-          // directorTypePrint: data.directorTypePrint,
-          // directorTypeFilm: data.directorTypeFilm,
-          // directorTypeDop: data.directorTypeDop,
+          directorProfile: profileData,
           directorSituation: data.directorSituation,
           directorContent: data.directorContent,
           directorContactEmail: data.directorContactEmail,
           directorContactPhone: data.directorContactPhone,
-          directorLabel: data.directorLabel,
-          // directorReckitt: data.directorReckitt,
+          // directorLabel: data.directorLabel,
           directorContacted: data.directorContacted,
           directorWebsite: data.directorWebsite,
           directorVimeo: data.directorVimeo,
@@ -96,11 +90,14 @@ export default class Submission extends React.Component {
   }
 
   render() {
+    let formTitle
+    this.state.editMode ? formTitle = 'Edit ' + this.state.directorName + "'s profile" : formTitle = 'Submit a new talent.'
+
     return (
       <div className = "main-container">
       <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a">
         <Header currentPage={this.state.currentPage}/>
-        <h1 style={styles.h1}>Submit a new director.</h1>
+        <h1 style={styles.h1}>{formTitle}</h1>
         <Form
           editMode={this.state.editMode}
           oldName={this.state.directorName}
@@ -116,7 +113,7 @@ export default class Submission extends React.Component {
           content={this.state.directorContent}
           contactEmail={this.state.directorContactEmail}
           contactPhone={this.state.directorContactPhone}
-          label={this.state.directorLabel}
+          // label={this.state.directorLabel}
           // reckitt={this.state.directorReckitt}
           contacted={this.state.directorContacted}
           website={this.state.directorWebsite}
@@ -142,6 +139,6 @@ var styles = {
     marginBottom : '8px',
     fontFamily : 'Montserrat',
     textAlign : 'center',
-    marginTop : 60
+    marginTop : 140
   },
 }

@@ -14,15 +14,12 @@ export default class Director extends React.Component {
       directorLoca : '',
       directorCat : '',
       directorSubCat : [],
-      directorTypePrint : false,
-      directorTypeFilm : false,
-      directorTypeDop : false,
+      directorProfile: [],
       directorSituation : '',
       directorContent : '',
       directorContactEmail : '',
       directorContactPhone: '',
       directorLabel: '',
-      // directorReckitt : '',
       directorContacted : '',
       directorWebsite : '',
       directorVimeo : '',
@@ -30,7 +27,6 @@ export default class Director extends React.Component {
       directorVideos : [],
     }
   }
-
 
   componentWillMount() {
     var ctx = this
@@ -43,44 +39,47 @@ export default class Director extends React.Component {
       var subCatData = data.directorSubCat.map((element, i) => {
         return element.subCatLabel
       })
-      var subCatString = subCatData.join(' ')
+      var subCatString = subCatData.join(', ')
+
+      var profileData = data.directorProfile.map(item => item.profileLabel)
 
       ctx.setState({
-        directorName : data.directorName,
-        directorLoca : data.directorLoca,
-        directorCat : data.directorCat,
-        directorSubCat : subCatString,
-        directorTypePrint : data.directorTypePrint,
-        directorTypeFilm : data.directorTypeFilm,
-        directorTypeDop : data.directorTypeDop,
-        directorSituation : data.directorSituation,
-        directorContent : data.directorContent,
-        directorContactEmail : data.directorContactEmail,
+        directorName: data.directorName,
+        directorLoca: data.directorLoca,
+        directorCat: data.directorCat,
+        directorSubCat: subCatString,
+        directorProfile: profileData,
+        directorSituation: data.directorSituation,
+        directorContent: data.directorContent,
+        directorContactEmail: data.directorContactEmail,
         directorContactPhone: data.directorContactPhone,
-        directorLabel: data.directorLabel,
-        // directorReckitt : data.directorReckitt,
-        directorContacted : data.directorContacted,
-        directorWebsite : data.directorWebsite,
-        directorVimeo : data.directorVimeo,
-        directorInsta : data.directorInsta,
-        directorVideos : data.directorVideos,
+        // directorLabel: data.directorLabel,
+        directorContacted: data.directorContacted,
+        directorWebsite: data.directorWebsite,
+        directorVimeo: data.directorVimeo,
+        directorInsta: data.directorInsta,
+        directorVideos: data.directorVideos,
       })
     })
   }
 
   extractVideoID = (url) => {
-    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-    var match = url.match(regExp);
-    if ( match && match[7].length === 11 ){
-        return match[7];
-    }else{
-        alert("Could not extract video ID.");
+    var regExp = /^.*((youtu.be\/|vimeo.com\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp)
+    if (match&&match[7]) {
+      return match[7];
+    } else {
+        console.error("Could not extract video ID.")
     }
   }
 
   render() {
-    console.log('DIRECTOR states', this.state);
+    // console.log('DIRECTOR states', this.state);
     var directorNameProp = this.state.directorName
+    const directorProfileString = this.state.directorProfile.join(' ')
+    var directorContacted, directorContent
+    this.state.directorContacted ? directorContacted = 'Yes' : directorContacted = 'No'
+    this.state.directorContent ? directorContent = 'Yes' : directorContent = 'No'
     return (
       <div className = "main-container">
       <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a">
@@ -91,18 +90,50 @@ export default class Director extends React.Component {
         <div style={styles.directorMain}>
           <div style={styles.directorInfos}>
             <h1 style={styles.h1}>{this.state.directorName}.</h1>
+            <h2 style={styles.h2}>{directorProfileString}</h2>
             <div style={styles.pictosLinks} className='pictosLinks'>
               <a href={this.state.directorWebsite} target="_blank">Site</a> <a href={this.state.directorInsta} target="_blank">Insta</a> <a href={this.state.directorVimeo} target="_blank">Vimeo</a>
             </div>
             <div style={styles.directorData}>
-              <div>
+              <div style={styles.directorDataFeat}>
+                <span className="title" style={styles.directorDataTitle}>Localisation.</span>
+                <span className="data" style={styles.directorDataContent}>{this.state.directorLoca}</span>
+              </div>
+              <div style={styles.directorDataFeat}>
+                <span className="title" style={styles.directorDataTitle}>Category.</span>
+                <span className="data" style={styles.directorDataContent}>{this.state.directorCat}</span>
+              </div>
+              <div style={styles.directorDataFeat}>
+                <span className="title" style={styles.directorDataTitle}>Subcategories.</span>
+                <span className="data" style={styles.directorDataSubCat}>{this.state.directorSubCat}</span>
+              </div>
+              <div style={styles.directorDataFeat}>
+                <span className="title" style={styles.directorDataTitle}>Situation.</span>
+                <span className="data" style={styles.directorDataContent}>{this.state.directorSituation}</span>
+              </div>
+              <div style={styles.directorDataFeat}>
+                <span className="title" style={styles.directorDataTitle}>Content.</span>
+                <span className="data" style={styles.directorDataContent}>{directorContent}</span>
+              </div>
+              <div style={styles.directorDataFeat}>
+                <span className="title" style={styles.directorDataTitle}>Contacted.</span>
+                <span className="data" style={styles.directorDataContent}>{directorContacted}</span>
+              </div>
+              <div style={styles.directorDataFeat}>
+                <span className="title" style={styles.directorDataTitle}>Mail.</span>
+                <span className="data" style={styles.directorDataContent}>{this.state.directorContactEmail}</span>
+              </div>
+              <div style={styles.directorDataFeat}>
+                <span className="title" style={styles.directorDataTitle}>Mob.</span>
+                <span className="data" style={styles.directorDataContent}>{this.state.directorContactPhone}</span>
+              </div>
+              {/* <div>
                 <ul className='directorDataList' style={styles.directorDataList}>
                   <li>Localisation.</li>
                   <li>Category.</li>
                   <li>Subcategories.</li>
                   <li>Situation.</li>
                   <li>Content.</li>
-                  <li>Profil.</li>
                   <li>Mail.</li>
                   <li>Mob.</li>
                 </ul>
@@ -114,11 +145,10 @@ export default class Director extends React.Component {
                   <li>{this.state.directorSubCat}</li>
                   <li>{this.state.directorSituation}</li>
                   <li>{this.state.directorContent}</li>
-                  <li>Print {this.state.directorTypePrint}, Film {this.state.directorTypeFilm}, DOP {this.state.directorTypeDop}</li>
                   <li>{this.state.directorContactEmail}</li>
                   <li>{this.state.directorContactPhone}</li>
                 </ul>
-              </div>
+              </div> */}
             </div>
             <Link to={{pathname : '/submission', state : {directorName : directorNameProp}}}><button style={styles.editButton}>Edit</button></Link>
           </div>
@@ -128,7 +158,10 @@ export default class Director extends React.Component {
               {this.state.directorVideos.map((item, i) => {
                 if (item.videoSource === 'Youtube' && item.videoUrl !== '') {
                   var videoUrl = this.extractVideoID(item.videoUrl)
-                  return <iframe width="560" height="315" src={`https://www.youtube.com/embed/${videoUrl}`} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  return <iframe width="560" height="315" src={`https://www.youtube.com/embed/${videoUrl}`} key={i} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                } else if (item.videoSource === 'Vimeo' && item.videoUrl !== '') {
+                  var videoUrl = this.extractVideoID(item.videoUrl)
+                  return <iframe src={`https://player.vimeo.com/video/${videoUrl}?embedparameter=value`} width="560" height="315" frameBorder="0" allowFullScreen></iframe>
                 }
               }
               )}
@@ -143,9 +176,10 @@ export default class Director extends React.Component {
 
 var styles = {
   pictoBack : {
-    position: 'absolute',
-    left : '10px',
-    marginTop : '20px'
+    position: 'fixed',
+    left : '30px',
+    marginTop : '20px',
+    top: '80px'
   },
   pictosLinks : {
     fontFamily : 'Montserrat'
@@ -155,9 +189,14 @@ var styles = {
     fontFamily : 'Montserrat',
     textTransform : 'uppercase'
   },
+  h2 : {
+    fontFamily : 'Montserrat',
+    fontSize: '16px',
+    marginTop: 0
+  },
   directorData : {
     display : 'flex',
-    flexDirection : 'row',
+    flexDirection : 'column',
     alignItems : 'center',
     marginTop : '30px'
   },
@@ -166,20 +205,42 @@ var styles = {
     display : 'flex',
     flexDirection : 'column',
     alignItems : 'center',
-    paddingTop : '60px'
+    top : '140px',
+    fontFamily : 'Montserrat',
+    fontSize : 15,
+    position: 'fixed'
   },
   directorMain : {
     display : 'flex',
   },
   directorVideos : {
     backgroundColor : 'black',
-    width : '66vw',
-    height : '100vh'
+    position: 'absolute',
+    left: '33vw',
+    minHeight: '100%'
   },
   directorDataList : {
     listStyleType : 'none',
     fontFamily : 'Montserrat',
     fontSize : 15
+  },
+  directorDataFeat : {
+    width: '20vw',
+    marginBottom: 8
+  },
+  directorDataTitle : {
+    marginRight: 40
+  },
+  directorDataContent : {
+    position: 'fixed',
+    display: 'inline-flex',
+    left: 250,
+    width: 150
+  },
+  directorDataSubCat : {
+    display: 'inline-flex',
+    left: 250,
+    width: 150
   },
   videoTitle : {
     color: 'white',
@@ -200,6 +261,8 @@ var styles = {
     paddingLeft : 25,
     paddingRight : 25,
     position : 'relative',
-    left : -96
+    left : -117,
+    marginTop: 12,
+    cursor: 'pointer'
   }
 }

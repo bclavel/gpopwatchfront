@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Checkbox from '@material-ui/core/Checkbox';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import ListItemText from '@material-ui/core/ListItemText';
+import Select from '@material-ui/core/Select';
+import Snackbar from '@material-ui/core/Snackbar';
+// import MuiAlert from '@material-ui/lab/Alert';
 import backEndAddress from '../config';
 
 const categories = [
@@ -34,29 +38,11 @@ const categories = [
   },
 ];
 
-const profiles = [
-  {
-    value: 'Director',
-  },
-  {
-    value: 'Photographer',
-  },
-  {
-    value: 'DOP',
-  },
-  {
-    value: 'Stylist',
-  },
-  {
-    value: 'Hair',
-  },
-  {
-    value: 'Makeup',
-  },
-  {
-    value: 'Set designer',
-  },
-];
+const profilesList = ['Director', 'DOP', 'Make up', 'Stylist', 'Hair', 'Line prod', 'Art Dir', 'Steadicam', 'Ass Cam', 'DIT', 'Gaffer', 'Grip', 'Set designer', 'SFX', 'Choreographer', 'Food Stylist']
+
+// function Alert(props) {
+//   return <MuiAlert elevation={6} variant="filled" {...props} />;
+// }
 
 export default function SubmitForm(props) {
   const classes = useStyles();
@@ -65,13 +51,11 @@ export default function SubmitForm(props) {
     localisation : props.localisation,
     category : props.category,
     subcategories : props.subcategories,
-    // profiles : props.profiles,
     situation : props.situation,
     content : props.content,
     contactEmail : props.contactEmail,
     contactPhone : props.contactPhone,
     label : props.label,
-    // reckitt : props.reckitt,
     contacted : props.contacted,
     website : props.website,
     vimeo : props.vimeo,
@@ -95,13 +79,11 @@ export default function SubmitForm(props) {
       localisation : props.localisation,
       category : props.category,
       subcategories : props.subcategories,
-      // profiles : props.profiles,
       situation : props.situation,
       content : props.content,
       contactEmail : props.contactEmail,
       contactPhone : props.contactPhone,
       label : props.label,
-      // reckitt : props.reckitt,
       contacted : props.contacted,
       website : props.website,
       vimeo : props.vimeo,
@@ -116,48 +98,19 @@ export default function SubmitForm(props) {
       videoSource4: props.videoSource4
     });
 
-    let profilesTmp = {}
-    props.profiles.map(item => {
-      profilesTmp[item] = true
-      return {
-        profilesTmp,
-      }
-    })
-    setState({profilesTmp})
+    setProfiles(props.profiles)
+
   }, [initData.name])
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const [state, setState] = React.useState({
-    director: false,
-    photographer: false,
-    dop: false,
-    stylist: false,
-    hair: false,
-    makeup: false,
-    set: false
-  });
+  const [profiles, setProfiles] = React.useState([]);
 
-  const [profiles, setProfiles] = React.useState({
-    profiles: []
-  });
-
-  const handleChangeSelect = name => event => {
-    setState({ ...state, [name]: event.target.checked });
-
-    let profilesTmp = [...profiles]
-    profilesTmp.push(name)
-    setProfiles({profiles: profilesTmp})
+  const handleChangeSimple = event => {
+    setProfiles(event.target.value);
   };
-
-  // var videoList = {
-  //   videoUrl1 : values.video1,
-  //   videoUrl2 : values.video2,
-  //   videoUrl3 : values.video3,
-  //   videoUrl4 : values.video4
-  // }
 
   if (props.editMode) {
     var handleSubmit = function() {
@@ -165,7 +118,7 @@ export default function SubmitForm(props) {
       fetch(`${backEndAddress}/updatedirector`, {
        method: 'POST',
        headers: {'Content-Type':'application/x-www-form-urlencoded'},
-       body: `oldName=${props.oldName}&directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorProfile=${values.profiles}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideoSource1=${values.videoSource1}&directorVideo2=${values.video2}&directorVideoSource2=${values.videoSource2}&directorVideo3=${values.video3}&directorVideoSource3=${values.videoSource3}&directorVideo4=${values.video4}&directorVideoSource4=${values.videoSource4}`
+       body: `oldName=${props.oldName}&directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorProfile=${profiles}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideoSource1=${values.videoSource1}&directorVideo2=${values.video2}&directorVideoSource2=${values.videoSource2}&directorVideo3=${values.video3}&directorVideoSource3=${values.videoSource3}&directorVideo4=${values.video4}&directorVideoSource4=${values.videoSource4}`
       })
       .then(function(response) {
         return response.json()
@@ -175,12 +128,12 @@ export default function SubmitForm(props) {
       })
     }
   } else {
-    var handleSubmit = function() {
+    handleSubmit = function() {
       console.log('Submit create director');
       fetch(`${backEndAddress}/createdirector`, {
        method: 'POST',
        headers: {'Content-Type':'application/x-www-form-urlencoded'},
-       body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorProfile=${values.profiles}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideoSource1=${values.videoSource1}&directorVideo2=${values.video2}&directorVideoSource2=${values.videoSource2}&directorVideo3=${values.video3}&directorVideoSource3=${values.videoSource3}&directorVideo4=${values.video4}&directorVideoSource4=${values.videoSource4}`
+       body: `directorName=${values.name}&directorLoca=${values.localisation}&directorCat=${values.category}&directorSubCat=${values.subcategories}&directorProfile=${profiles}&directorSituation=${values.situation}&directorContent=${values.content}&directorContactEmail=${values.contactEmail}&directorContactPhone=${values.contactPhone}&directorLabel=${values.label}&directorContacted=${values.contacted}&directorWebsite=${values.website}&directorVimeo=${values.vimeo}&directorInsta=${values.insta}&directorVideo1=${values.video1}&directorVideoSource1=${values.videoSource1}&directorVideo2=${values.video2}&directorVideoSource2=${values.videoSource2}&directorVideo3=${values.video3}&directorVideoSource3=${values.videoSource3}&directorVideo4=${values.video4}&directorVideoSource4=${values.videoSource4}`
       })
       .then(function(response) {
         return response.json()
@@ -190,6 +143,24 @@ export default function SubmitForm(props) {
       })
     }
   }
+
+  const handleDelete = () => {
+    console.log('delete!')
+  }
+
+  // const [open, setOpen] = React.useState(false);
+
+  // const handleConfirm = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleClose = (event, reason) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+
+  //   setOpen(false);
+  // };
 
   return (
     <form className={classes.container} autoComplete="off">
@@ -202,6 +173,25 @@ export default function SubmitForm(props) {
         onChange={handleChange('name')}
         margin="normal"
       />
+      <FormControl className={classes.textField}>
+        <InputLabel id="profile">Profile</InputLabel>
+        <Select
+          labelid="profile"
+          id="profile-multiple"
+          multiple
+          value={profiles}
+          onChange={handleChangeSimple}
+          input={<Input />}
+          renderValue={selected => selected.join(', ')}
+        >
+          {profilesList.map(item => (
+            <MenuItem key={item} value={item}>
+              <Checkbox checked={profiles.indexOf(item) > -1} />
+              <ListItemText primary={item} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <TextField
         id="category"
         label="Category"
@@ -222,26 +212,6 @@ export default function SubmitForm(props) {
         </MenuItem>
       ))}
       </TextField>
-      {/* <TextField
-        id="profiles"
-        label="Profiles"
-        select
-        className={classes.textField}
-        value={values.profiles}
-        onChange={handleChange('profiles')}
-        SelectProps={{
-          MenuProps: {
-            className: classes.menu,
-          },
-        }}
-        margin="normal"
-      >
-      {profiles.map(option => (
-        <MenuItem key={option.value} value={option.value}>
-          {option.value}
-        </MenuItem>
-      ))}
-      </TextField> */}
       <TextField
         id="subcategories"
         label="Sub categories"
@@ -250,55 +220,6 @@ export default function SubmitForm(props) {
         onChange={handleChange('subcategories')}
         margin="normal"
       />
-      <div style={{width : 600, marginTop : 16}}>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Talent profile</FormLabel>
-        <FormGroup row>
-         <FormControlLabel className={classes.printFilmDop}
-           control={
-             <Checkbox checked={state.director} onChange={handleChangeSelect('director')} value="director" />
-           }
-           label="Director"
-         />
-         <FormControlLabel className={classes.printFilmDop}
-           control={
-             <Checkbox checked={state.photographer} onChange={handleChangeSelect('photographer')} value="photographer" />
-           }
-           label="Photographer"
-         />
-         <FormControlLabel className={classes.printFilmDop}
-           control={
-             <Checkbox checked={state.dop} onChange={handleChangeSelect('dop')} value="dop" />
-           }
-           label="DOP"
-         />
-         <FormControlLabel className={classes.printFilmDop}
-           control={
-             <Checkbox checked={state.stylist} onChange={handleChangeSelect('stylist')} value="stylist" />
-           }
-           label="Stylist"
-         />
-         <FormControlLabel className={classes.printFilmDop}
-           control={
-             <Checkbox checked={state.hair} onChange={handleChangeSelect('hair')} value="hair" />
-           }
-           label="Hair"
-         />
-         <FormControlLabel className={classes.printFilmDop}
-           control={
-             <Checkbox checked={state.makeup} onChange={handleChangeSelect('makeup')} value="makeup" />
-           }
-           label="Makeup"
-         />
-         <FormControlLabel className={classes.printFilmDop}
-           control={
-             <Checkbox checked={state.set} onChange={handleChangeSelect('set')} value="set" />
-           }
-           label="Set designer"
-         />
-        </FormGroup>
-      </FormControl>
-      </div>
       <TextField
         id="localisation"
         label="Localisation"
@@ -397,34 +318,13 @@ export default function SubmitForm(props) {
           {'No'}
         </MenuItem>
       </TextField>
-      <TextField
+      {/* <TextField
         id="label"
         label="Label"
         select
         className={classes.textField}
         value={values.label}
         onChange={handleChange('label')}
-        SelectProps={{
-          MenuProps: {
-            className: classes.menu,
-          },
-        }}
-        margin="normal"
-        >
-        <MenuItem key='yes' value={true}>
-          {'Yes'}
-        </MenuItem>
-        <MenuItem key='no' value={false}>
-          {'No'}
-        </MenuItem>
-      </TextField>
-      {/* <TextField
-        id="reckitt"
-        label="Reckitt"
-        select
-        className={classes.textField}
-        value={values.reckitt}
-        onChange={handleChange('reckitt')}
         SelectProps={{
           MenuProps: {
             className: classes.menu,
@@ -463,10 +363,10 @@ export default function SubmitForm(props) {
           }}
           margin="normal"
           >
-          <MenuItem key='yes' value={true}>
+          <MenuItem key='yes' value={'Vimeo'}>
             {'Vimeo'}
           </MenuItem>
-          <MenuItem key='no' value={false}>
+          <MenuItem key='no' value={'Youtube'}>
             {'Youtube'}
           </MenuItem>
         </TextField>
@@ -494,10 +394,10 @@ export default function SubmitForm(props) {
           }}
           margin="normal"
           >
-          <MenuItem key='yes' value={true}>
+          <MenuItem key='yes' value={'Vimeo'}>
             {'Vimeo'}
           </MenuItem>
-          <MenuItem key='no' value={false}>
+          <MenuItem key='no' value={'Youtube'}>
             {'Youtube'}
           </MenuItem>
         </TextField>
@@ -525,10 +425,10 @@ export default function SubmitForm(props) {
           }}
           margin="normal"
           >
-          <MenuItem key='yes' value={true}>
+          <MenuItem key='yes' value={'Vimeo'}>
             {'Vimeo'}
           </MenuItem>
-          <MenuItem key='no' value={false}>
+          <MenuItem key='no' value={'Youtube'}>
             {'Youtube'}
           </MenuItem>
         </TextField>
@@ -543,7 +443,7 @@ export default function SubmitForm(props) {
           margin="normal"
         />
         <TextField
-          id="videoSource1"
+          id="videoSource4"
           label="Source"
           select
           className={classes.videoSourceField}
@@ -556,15 +456,17 @@ export default function SubmitForm(props) {
           }}
           margin="normal"
           >
-          <MenuItem key='yes' value={true}>
+          <MenuItem key='yes' value={'Vimeo'}>
             {'Vimeo'}
           </MenuItem>
-          <MenuItem key='no' value={false}>
+          <MenuItem key='no' value={'Youtube'}>
             {'Youtube'}
           </MenuItem>
         </TextField>
       </div>
       <div style={{width : '600px', textAlign : 'right' }}>
+        <button style={styles.deleteButton} onClick={handleDelete}>Delete this talent</button>
+        <Link to='/'><button style={styles.cancelButton}>Cancel</button></Link>
         <button style={styles.editButton} onClick={handleSubmit}>Submit</button>
       </div>
       </Grid>
@@ -597,24 +499,47 @@ const useStyles = makeStyles(theme => ({
   },
   menu: {
     width: 200,
-  },
-  printFilmDop : {
-    marginTop : theme.spacing(3),
-    paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
   }
 }));
 
 var styles = {
   editButton : {
-    backgroundColor : 'black',
-    color : 'white',
-    borderStyle : 'none',
+    backgroundColor: 'black',
+    color: 'white',
+    borderStyle: 'none',
+    marginTop: 20,
+    marginBottom: 60,
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 25,
+    paddingRight: 25,
+    cursor: 'pointer'
+  },
+  cancelButton : {
+    backgroundColor: 'white',
+    color: 'black',
+    borderWidth: '1px',
+    borderColor: 'black',
     marginTop : 20,
-    marginBottom : 60,
-    paddingTop : 4,
-    paddingBottom : 4,
-    paddingLeft : 25,
-    paddingRight : 25,
+    marginRight: 20,
+    marginBottom: 60,
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 25,
+    paddingRight: 25,
+    cursor: 'pointer'
+  },
+  deleteButton: {
+    backgroundColor: '#f70000',
+    color: 'white',
+    borderStyle: 'none',
+    marginTop: 20,
+    marginBottom: 60,
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 25,
+    paddingRight: 25,
+    cursor: 'pointer',
+    float: 'left'
   }
 }

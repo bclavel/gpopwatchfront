@@ -34,6 +34,7 @@ export default class Header extends React.Component {
           <div style={styles.navLinks} className={navLinkSub}>
             <Link to='/submission'>Submissions</Link>
           </div>
+          <img style={{width : '90px', marginLeft: 30, marginTop: 6, marginBottom: 6 }} src="/images/generalpop-logo.png" alt="Général Pop" />
         </div>
     );
   }
@@ -44,11 +45,15 @@ var styles = {
     backgroundColor : 'black',
     display : 'flex',
     justifyContent : 'flex-start',
-    alignItems : 'center'
+    alignItems : 'center',
+    position: 'fixed',
+    zIndex: 1,
+    top: 0,
+    width: '100%'
   },
   navLogo : {
     width : '200px',
-    marginTop : '10px',
+    marginTop : '14px',
     marginBottom : '10px',
     marginLeft: '10px',
     marginRight : '30px'

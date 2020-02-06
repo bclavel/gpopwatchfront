@@ -26,6 +26,11 @@ export default class Dashboard extends React.Component {
           <div style={styles.filters}>
             <div style={styles.filtersLeft}>
               <h2>Filters</h2>
+              <MultiDropdownList
+                componentId="profilesSensor"
+                dataField="profiles.keyword"
+                title="Profile"
+              />
               <MultiList
                 componentId="categoriesList"
                 dataField="category.keyword"
@@ -58,19 +63,8 @@ export default class Dashboard extends React.Component {
             <MultiDropdownList
               componentId="subcategoriesSensor"
               dataField="subcategories.keyword"
-              title="Profile"
-            />
-            <MultiDropdownList
-              componentId="subcategoriesSensor"
-              dataField="subcategories.keyword"
               title="Sub categories"
             />
-            {/* <SingleDropdownList
-              componentId="subcategoriesSensor"
-              dataField="subcategories.keyword"
-              title="Sub categories"
-              className='leftSingleDropdownList'
-            /> */}
             <MultiDropdownList
               componentId="localisationSensor"
               dataField="localisation.keyword"
@@ -92,9 +86,9 @@ export default class Dashboard extends React.Component {
           <div style={styles.rightCol}>
             <div style={{...styles.directorRow, ...styles.directorTitle}}>
               <div style={{...styles.directorName, ...styles.bold}}>
-                Directors.
+                Talent.
               </div>
-              <div style={{...styles.directorCat, ...styles.bold}}>
+              <div style={{...styles.directorProfile, ...styles.bold}}>
                 Profile.
               </div>
               <div style={{...styles.directorCat, ...styles.bold}}>
@@ -109,9 +103,6 @@ export default class Dashboard extends React.Component {
               <div style={{...styles.directorLinks, ...styles.bold}}>
                 Links.
               </div>
-              {/* <div style={{...styles.directorType, ...styles.bold}}>
-                Print/Film/DOP.
-              </div> */}
             </div>
             <div style={styles.results}>
               <ReactiveList
@@ -127,7 +118,7 @@ export default class Dashboard extends React.Component {
                 showResultStats={false}
                 renderItem={this.RealReactiveList}
                 react={{
-                    and: ["mainSearch", "categoriesList", "localisationSensor", "situationSensor", "contentSensor", "subcategoriesSensor"]
+                    and: ["mainSearch", "profilesSensor", "categoriesList", "localisationSensor", "situationSensor", "contentSensor", "subcategoriesSensor"]
                 }}
               />
             </div>
@@ -139,11 +130,17 @@ export default class Dashboard extends React.Component {
   }
 
   RealReactiveList(data) {
-    var directorDOP, directorFilm, directorPrint, directorSubCat, directorVimeo, directorSite, directorInsta
-    directorPrint = (data.print ? "Print" : '' )
-    directorFilm = (data.film ? "Film" : '' )
-    directorDOP = (data.DOP ? "DOP" : '' )
+    var directorSubCat, directorVimeo, directorSite, directorInsta, directorProfiles
     directorSubCat = data.subcategories.join(' ')
+    if (directorSubCat.length > 30) {
+      directorSubCat = directorSubCat.slice(0, 30) + '...'
+    }
+    if (data.profiles) {
+      directorProfiles = data.profiles.join(' ')
+    }
+    if (data.profiles && directorProfiles.length > 25) {
+      directorProfiles = directorProfiles.slice(0, 25) + '...'
+    }
     directorVimeo = (data.vimeo ? <a href={data.vimeo} target='_blank'>Vimeo</a> : null)
     directorSite = (data.website ? <a href={data.website} target='_blank'>Site</a> : null)
     directorInsta = (data.instagram ? <a href={data.instagram} target='_blank'>Insta</a> : null)
@@ -153,8 +150,8 @@ export default class Dashboard extends React.Component {
         <div className='directorName' style={styles.directorName}>
           <Link to={`/director/${data.name}`}>{data.name}</Link>
         </div>
-        <div style={styles.directorCat}>
-          {}
+        <div style={styles.directorProfile}>
+          {directorProfiles}
         </div>
         <div style={styles.directorCat}>
           {data.category}
@@ -168,9 +165,6 @@ export default class Dashboard extends React.Component {
         <div style={styles.directorLinks} className='directorLinks'>
           {directorSite} {directorVimeo} {directorInsta}
         </div>
-        {/* <div style={styles.directorType}>
-          {directorPrint} {directorFilm} {directorDOP}
-        </div> */}
       </div>
     )
   }
@@ -181,7 +175,7 @@ var styles = {
     display : 'flex',
     alignItems : 'center',
     justifyContent : 'center',
-    marginTop : 20
+    marginTop : 80
   },
   h1 : {
     textAlign: 'center',
@@ -213,7 +207,7 @@ var styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent : 'center',
-    fontSize: '15px',
+    fontSize: '14px',
     marginRight : '10px'
   },
   directorName : {
@@ -222,10 +216,19 @@ var styles = {
     height : '30px',
     paddingTop : '8px',
     marginBottom: '5px',
-    fontFamily : 'Montserrat'
+    fontFamily : 'Montserrat',
+    fontWeight: 'bold'
   },
   directorCat : {
-    width: '15vw',
+    width: '14vw',
+    textAlign: 'center',
+    height : '30px',
+    paddingTop : '8px',
+    marginBottom: '5px',
+    fontFamily : 'Montserrat'
+  },
+  directorProfile: {
+    width: '16vw',
     textAlign: 'center',
     height : '30px',
     paddingTop : '8px',
@@ -250,14 +253,6 @@ var styles = {
   },
   directorLinks : {
     width: '10vw',
-    textAlign: 'center',
-    height : '30px',
-    paddingTop : '8px',
-    marginBottom: '5px',
-    fontFamily : 'Montserrat'
-  },
-  directorType : {
-    width: '15vw',
     textAlign: 'center',
     height : '30px',
     paddingTop : '8px',
