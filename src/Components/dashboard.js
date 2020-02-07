@@ -1,22 +1,23 @@
 import React from 'react';
 import { ReactiveBase, MultiList, SingleDropdownList, MultiDropdownList, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Header from './header'
 import "../App.css";
 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     console.log('this.props', this.props);
     this.state = {
       currentPage : this.props.match.path,
+      isDashboard: true
     }
   }
   render() {
     return (
       <div className = "main-container">
       <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a">
-        <Header currentPage={this.state.currentPage}/>
+        <Header currentPage={this.state.currentPage} isDashboard={this.state.isDashboard}/>
         <div style={styles.header}>
           <div style={styles.h1}>
             <h1>Talents database.</h1>
@@ -169,6 +170,8 @@ export default class Dashboard extends React.Component {
     )
   }
 }
+
+export default withRouter(Dashboard)
 
 var styles = {
   header : {

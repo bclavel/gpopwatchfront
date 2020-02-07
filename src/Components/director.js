@@ -1,11 +1,12 @@
 import React from 'react';
 import { ReactiveBase } from '@appbaseio/reactivesearch';
+import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Header from './header'
 import "../App.css";
 import backEndAddress from '../config';
 
-export default class Director extends React.Component {
+class Director extends React.Component {
 
   constructor(props) {
     super(props);
@@ -25,6 +26,7 @@ export default class Director extends React.Component {
       directorVimeo : '',
       directorInsta : '',
       directorVideos : [],
+      isDashboard: false
     }
   }
 
@@ -82,8 +84,8 @@ export default class Director extends React.Component {
     this.state.directorContent ? directorContent = 'Yes' : directorContent = 'No'
     return (
       <div className = "main-container">
-      <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a">
-        <Header />
+      {/* <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a"> */}
+        <Header isDashboard={this.state.isDashboard} />
         <div style={styles.pictoBack}>
           <Link to='/'><img style={{width : '30px'}} src="/images/back.jpg" alt="Back"/></Link>
         </div>
@@ -168,11 +170,13 @@ export default class Director extends React.Component {
             </div>
           </div>
         </div>
-      </ReactiveBase>
+      {/* </ReactiveBase> */}
       </div>
     );
   }
 }
+
+export default withRouter(Director)
 
 var styles = {
   pictoBack : {

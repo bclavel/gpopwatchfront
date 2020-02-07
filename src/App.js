@@ -15,11 +15,11 @@ class App extends Component {
   render() {
     return (
         <Router>
-          <Switch>
+          {/* <Switch> */}
             <Route path="/" exact component={Dashboard} />
             <Route path="/director/:name" component={Director} />
-            <Route path="/submission/" component={Submission} />
-          </Switch>
+            <Route path="/submission/" exact component={Submission} />
+          {/* </Switch> */}
         </Router>
     )
   }

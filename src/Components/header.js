@@ -21,13 +21,16 @@ export default class Header extends React.Component {
           <div style={styles.navLogo}>
             <Link to='/'><img style={{width : '100%'}} alt='G-Pop Watch' src='/images/gpopwatch-logo.jpg' /></Link>
           </div>
-          <DataSearch
-            componentId = "mainSearch"
-            dataField = {["name"]}
-            className = "search-bar"
-            queryFormat = "and"
-            placeholder = "Search for a director"
-          />
+          {this.props.isDashboard ? 
+            <DataSearch
+              componentId = "mainSearch"
+              dataField = {["name"]}
+              className = "search-bar"
+              queryFormat = "and"
+              placeholder = "Search for a director"
+            /> 
+          :
+          null }
           <div style={styles.navLinks} className={navLinkGpop}>
             <a href='/'>Talents G-Pop</a>
           </div>

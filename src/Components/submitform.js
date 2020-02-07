@@ -38,7 +38,7 @@ const categories = [
   },
 ];
 
-const profilesList = ['Director', 'DOP', 'Make up', 'Stylist', 'Hair', 'Line prod', 'Art Dir', 'Steadicam', 'Ass Cam', 'DIT', 'Gaffer', 'Grip', 'Set designer', 'SFX', 'Choreographer', 'Food Stylist']
+const profilesList = ['Director', 'DOP', 'Make up', 'Stylist', 'Hair', 'Line prod', 'Art Dir', 'Steadicam', 'Ass Cam', 'DIT', 'Gaffer', 'Grip', 'Set designer', 'SFX', 'Choreographer', 'Food Stylist', 'Motion designer']
 
 // function Alert(props) {
 //   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -68,6 +68,7 @@ export default function SubmitForm(props) {
     videoSource3: props.videoSource3,
     video4 : props.video4,
     videoSource4: props.videoSource4,
+    handleOpenModal: props.handleOpenModal
   }
 
   const [values, setValues] = useState({...initData});
@@ -95,7 +96,8 @@ export default function SubmitForm(props) {
       video3 : props.video3,
       videoSource3: props.videoSource3,
       video4 : props.video4,
-      videoSource4: props.videoSource4
+      videoSource4: props.videoSource4,
+      handleOpenModal: props.handleOpenModal
     });
 
     setProfiles(props.profiles)
@@ -144,333 +146,369 @@ export default function SubmitForm(props) {
     }
   }
 
-  const handleDelete = () => {
-    console.log('delete!')
-  }
 
-  // const [open, setOpen] = React.useState(false);
 
-  // const handleConfirm = () => {
-  //   setOpen(true);
-  // };
+  // handleModal = (bool, origin, form) => {
+	// 	if (bool) {
+	// 		this.setState({
+	// 			popin: bool,
+	// 			popinClosing: false,
+	// 			popinTarget: origin,
+	// 			deletedForm : form
+	// 		})
+	// 	} else if (bool) {
+	// 		// on popin opening
+	// 		this.setState({
+	// 			popin: bool,
+	// 			popinClosing: false,
+	// 			popinTarget: origin
+	// 		})
+	// 	} else {
+	// 		// on popin closing
+	// 		this.setState({
+	// 			popinClosing: true
+	// 		}, _=> {
+	// 			setTimeout(() => {
+	// 				this.setState({
+	// 					popin: bool,
+	// 					popinTarget: origin,
+	// 					deletedForm: {}
+	// 				})
+	// 			}, 400);
+	// 		})
+	// 	}
+	// }
 
-  // const handleClose = (event, reason) => {
-  //   if (reason === 'clickaway') {
-  //     return;
-  //   }
-
-  //   setOpen(false);
-  // };
+	// handleDeleteTalent = () => {
+	// 	let filteredData = this.state.answers.filter(item => (
+	// 		item.form.id !== this.state.deletedForm.id
+	// 	))
+	// 	this.setState({answers : filteredData}
+	// 		,_=> {
+	// 		this.setState({
+	// 			popinClosing: true
+	// 		}, _=> {
+	// 			setTimeout(() => {
+	// 				this.setState({
+	// 					popin: false,
+	// 					popinTarget: null,
+	// 				})
+	// 			}, 400);
+	// 		})
+	// 	})
+  // }
 
   return (
-    <form className={classes.container} autoComplete="off">
-    <Grid container justify="flex-start" direction="column" alignItems="center" spacing={3}>
-      <TextField
-        id="name"
-        label="Name"
-        className={classes.textField}
-        value={values.name}
-        onChange={handleChange('name')}
-        margin="normal"
-      />
-      <FormControl className={classes.textField}>
-        <InputLabel id="profile">Profile</InputLabel>
-        <Select
-          labelid="profile"
-          id="profile-multiple"
-          multiple
-          value={profiles}
-          onChange={handleChangeSimple}
-          input={<Input />}
-          renderValue={selected => selected.join(', ')}
-        >
-          {profilesList.map(item => (
-            <MenuItem key={item} value={item}>
-              <Checkbox checked={profiles.indexOf(item) > -1} />
-              <ListItemText primary={item} />
+    <>
+      <form className={classes.container} autoComplete="off">
+        <Grid container justify="flex-start" direction="column" alignItems="center" spacing={3}>
+          <TextField
+            id="name"
+            label="Name"
+            className={classes.textField}
+            value={values.name}
+            onChange={handleChange('name')}
+            margin="normal"
+          />
+          <FormControl className={classes.textField}>
+            <InputLabel id="profile">Profile</InputLabel>
+            <Select
+              labelid="profile"
+              id="profile-multiple"
+              multiple
+              value={profiles}
+              onChange={handleChangeSimple}
+              input={<Input />}
+              renderValue={selected => selected.join(', ')}
+            >
+              {profilesList.map(item => (
+                <MenuItem key={item} value={item}>
+                  <Checkbox checked={profiles.indexOf(item) > -1} />
+                  <ListItemText primary={item} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField
+            id="category"
+            label="Category"
+            select
+            className={classes.textField}
+            value={values.category}
+            onChange={handleChange('category')}
+            SelectProps={{
+              MenuProps: {
+                className: classes.menu,
+              },
+            }}
+            margin="normal"
+          >
+          {categories.map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.value}
             </MenuItem>
           ))}
-        </Select>
-      </FormControl>
-      <TextField
-        id="category"
-        label="Category"
-        select
-        className={classes.textField}
-        value={values.category}
-        onChange={handleChange('category')}
-        SelectProps={{
-          MenuProps: {
-            className: classes.menu,
-          },
-        }}
-        margin="normal"
-      >
-      {categories.map(option => (
-        <MenuItem key={option.value} value={option.value}>
-          {option.value}
-        </MenuItem>
-      ))}
-      </TextField>
-      <TextField
-        id="subcategories"
-        label="Sub categories"
-        className={classes.textField}
-        value={values.subcategories}
-        onChange={handleChange('subcategories')}
-        margin="normal"
-      />
-      <TextField
-        id="localisation"
-        label="Localisation"
-        className={classes.textField}
-        value={values.localisation}
-        onChange={handleChange('localisation')}
-        margin="normal"
-      />
-      <TextField
-        id="website"
-        label="Website"
-        className={classes.textField}
-        value={values.website}
-        onChange={handleChange('website')}
-        margin="normal"
-      />
-      <TextField
-        id="vimeo"
-        label="Vimeo"
-        className={classes.textField}
-        value={values.vimeo}
-        onChange={handleChange('vimeo')}
-        margin="normal"
-      />
-      <TextField
-        id="insta"
-        label="Instagram"
-        className={classes.textField}
-        value={values.insta}
-        onChange={handleChange('insta')}
-        margin="normal"
-      />
-      <TextField
-        id="contactEmail"
-        label="Email"
-        className={classes.textField}
-        value={values.contactEmail}
-        onChange={handleChange('contactEmail')}
-        margin="normal"
-      />
-      <TextField
-        id="contactPhone"
-        label="Phone"
-        className={classes.textField}
-        value={values.contactPhone}
-        onChange={handleChange('contactPhone')}
-        margin="normal"
-      />
-      <TextField
-        id="contacted"
-        label="Contacted"
-        select
-        className={classes.textField}
-        value={values.contacted}
-        onChange={handleChange('contacted')}
-        SelectProps={{
-          MenuProps: {
-            className: classes.menu,
-          },
-        }}
-        margin="normal"
-        >
-        <MenuItem key='yes' value={true}>
-          {'Yes'}
-        </MenuItem>
-        <MenuItem key='no' value={false}>
-          {'No'}
-        </MenuItem>
-      </TextField>
-      <TextField
-        id="situation"
-        label="Situation"
-        className={classes.textField}
-        value={values.situation}
-        onChange={handleChange('situation')}
-        margin="normal"
-      />
-      <TextField
-        id="content"
-        label="Content"
-        select
-        className={classes.textField}
-        value={values.content}
-        onChange={handleChange('content')}
-        SelectProps={{
-          MenuProps: {
-            className: classes.menu,
-          },
-        }}
-        margin="normal"
-        >
-        <MenuItem key='yes' value={true}>
-          {'Yes'}
-        </MenuItem>
-        <MenuItem key='no' value={false}>
-          {'No'}
-        </MenuItem>
-      </TextField>
-      {/* <TextField
-        id="label"
-        label="Label"
-        select
-        className={classes.textField}
-        value={values.label}
-        onChange={handleChange('label')}
-        SelectProps={{
-          MenuProps: {
-            className: classes.menu,
-          },
-        }}
-        margin="normal"
-        >
-        <MenuItem key='yes' value={true}>
-          {'Yes'}
-        </MenuItem>
-        <MenuItem key='no' value={false}>
-          {'No'}
-        </MenuItem>
-      </TextField> */}
-      <h2 style={{textAlign : 'center', marginTop : 40}}>Videos</h2>
-      <div>
-        <TextField
-          id="video1"
-          label="Video #1"
-          className={classes.videoField}
-          value={values.video1}
-          onChange={handleChange('video1')}
-          margin="normal"
-        />
-        <TextField
-          id="videoSource1"
-          label="Source"
-          select
-          className={classes.videoSourceField}
-          value={values.videoSource1}
-          onChange={handleChange('videoSource1')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          margin="normal"
-          >
-          <MenuItem key='yes' value={'Vimeo'}>
-            {'Vimeo'}
-          </MenuItem>
-          <MenuItem key='no' value={'Youtube'}>
-            {'Youtube'}
-          </MenuItem>
-        </TextField>
-      </div>
-      <div>
-        <TextField
-          id="video2"
-          label="Video #2"
-          className={classes.videoField}
-          value={values.video2}
-          onChange={handleChange('video2')}
-          margin="normal"
-        />
-        <TextField
-          id="videoSource2"
-          label="Source"
-          select
-          className={classes.videoSourceField}
-          value={values.videoSource2}
-          onChange={handleChange('videoSource2')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          margin="normal"
-          >
-          <MenuItem key='yes' value={'Vimeo'}>
-            {'Vimeo'}
-          </MenuItem>
-          <MenuItem key='no' value={'Youtube'}>
-            {'Youtube'}
-          </MenuItem>
-        </TextField>
-      </div>
-      <div>
-        <TextField
-          id="video3"
-          label="Video #3"
-          className={classes.videoField}
-          value={values.video3}
-          onChange={handleChange('video3')}
-          margin="normal"
-        />
-        <TextField
-          id="videoSource3"
-          label="Source"
-          select
-          className={classes.videoSourceField}
-          value={values.videoSource3}
-          onChange={handleChange('videoSource3')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          margin="normal"
-          >
-          <MenuItem key='yes' value={'Vimeo'}>
-            {'Vimeo'}
-          </MenuItem>
-          <MenuItem key='no' value={'Youtube'}>
-            {'Youtube'}
-          </MenuItem>
-        </TextField>
-      </div>
-      <div>
-        <TextField
-          id="video4"
-          label="Video #4"
-          className={classes.videoField}
-          value={values.video4}
-          onChange={handleChange('video4')}
-          margin="normal"
-        />
-        <TextField
-          id="videoSource4"
-          label="Source"
-          select
-          className={classes.videoSourceField}
-          value={values.videoSource4}
-          onChange={handleChange('videoSource4')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          margin="normal"
-          >
-          <MenuItem key='yes' value={'Vimeo'}>
-            {'Vimeo'}
-          </MenuItem>
-          <MenuItem key='no' value={'Youtube'}>
-            {'Youtube'}
-          </MenuItem>
-        </TextField>
-      </div>
-      <div style={{width : '600px', textAlign : 'right' }}>
-        <button style={styles.deleteButton} onClick={handleDelete}>Delete this talent</button>
-        <Link to='/'><button style={styles.cancelButton}>Cancel</button></Link>
+          </TextField>
+          <TextField
+            id="subcategories"
+            label="Sub categories"
+            className={classes.textField}
+            value={values.subcategories}
+            onChange={handleChange('subcategories')}
+            margin="normal"
+          />
+          <TextField
+            id="localisation"
+            label="Localisation"
+            className={classes.textField}
+            value={values.localisation}
+            onChange={handleChange('localisation')}
+            margin="normal"
+          />
+          <TextField
+            id="website"
+            label="Website"
+            className={classes.textField}
+            value={values.website}
+            onChange={handleChange('website')}
+            margin="normal"
+          />
+          <TextField
+            id="vimeo"
+            label="Vimeo"
+            className={classes.textField}
+            value={values.vimeo}
+            onChange={handleChange('vimeo')}
+            margin="normal"
+          />
+          <TextField
+            id="insta"
+            label="Instagram"
+            className={classes.textField}
+            value={values.insta}
+            onChange={handleChange('insta')}
+            margin="normal"
+          />
+          <TextField
+            id="contactEmail"
+            label="Email"
+            className={classes.textField}
+            value={values.contactEmail}
+            onChange={handleChange('contactEmail')}
+            margin="normal"
+          />
+          <TextField
+            id="contactPhone"
+            label="Phone"
+            className={classes.textField}
+            value={values.contactPhone}
+            onChange={handleChange('contactPhone')}
+            margin="normal"
+          />
+          <TextField
+            id="contacted"
+            label="Contacted"
+            select
+            className={classes.textField}
+            value={values.contacted}
+            onChange={handleChange('contacted')}
+            SelectProps={{
+              MenuProps: {
+                className: classes.menu,
+              },
+            }}
+            margin="normal"
+            >
+            <MenuItem key='yes' value={true}>
+              {'Yes'}
+            </MenuItem>
+            <MenuItem key='no' value={false}>
+              {'No'}
+            </MenuItem>
+          </TextField>
+          <TextField
+            id="situation"
+            label="Situation"
+            className={classes.textField}
+            value={values.situation}
+            onChange={handleChange('situation')}
+            margin="normal"
+          />
+          <TextField
+            id="content"
+            label="Content"
+            select
+            className={classes.textField}
+            value={values.content}
+            onChange={handleChange('content')}
+            SelectProps={{
+              MenuProps: {
+                className: classes.menu,
+              },
+            }}
+            margin="normal"
+            >
+            <MenuItem key='yes' value={true}>
+              {'Yes'}
+            </MenuItem>
+            <MenuItem key='no' value={false}>
+              {'No'}
+            </MenuItem>
+          </TextField>
+          {/* <TextField
+            id="label"
+            label="Label"
+            select
+            className={classes.textField}
+            value={values.label}
+            onChange={handleChange('label')}
+            SelectProps={{
+              MenuProps: {
+                className: classes.menu,
+              },
+            }}
+            margin="normal"
+            >
+            <MenuItem key='yes' value={true}>
+              {'Yes'}
+            </MenuItem>
+            <MenuItem key='no' value={false}>
+              {'No'}
+            </MenuItem>
+          </TextField> */}
+          <h2 style={{textAlign : 'center', marginTop : 40}}>Videos</h2>
+          <div>
+            <TextField
+              id="video1"
+              label="Video #1"
+              className={classes.videoField}
+              value={values.video1}
+              onChange={handleChange('video1')}
+              margin="normal"
+            />
+            <TextField
+              id="videoSource1"
+              label="Source"
+              select
+              className={classes.videoSourceField}
+              value={values.videoSource1}
+              onChange={handleChange('videoSource1')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              margin="normal"
+              >
+              <MenuItem key='yes' value={'Vimeo'}>
+                {'Vimeo'}
+              </MenuItem>
+              <MenuItem key='no' value={'Youtube'}>
+                {'Youtube'}
+              </MenuItem>
+            </TextField>
+          </div>
+          <div>
+            <TextField
+              id="video2"
+              label="Video #2"
+              className={classes.videoField}
+              value={values.video2}
+              onChange={handleChange('video2')}
+              margin="normal"
+            />
+            <TextField
+              id="videoSource2"
+              label="Source"
+              select
+              className={classes.videoSourceField}
+              value={values.videoSource2}
+              onChange={handleChange('videoSource2')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              margin="normal"
+              >
+              <MenuItem key='yes' value={'Vimeo'}>
+                {'Vimeo'}
+              </MenuItem>
+              <MenuItem key='no' value={'Youtube'}>
+                {'Youtube'}
+              </MenuItem>
+            </TextField>
+          </div>
+          <div>
+            <TextField
+              id="video3"
+              label="Video #3"
+              className={classes.videoField}
+              value={values.video3}
+              onChange={handleChange('video3')}
+              margin="normal"
+            />
+            <TextField
+              id="videoSource3"
+              label="Source"
+              select
+              className={classes.videoSourceField}
+              value={values.videoSource3}
+              onChange={handleChange('videoSource3')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              margin="normal"
+              >
+              <MenuItem key='yes' value={'Vimeo'}>
+                {'Vimeo'}
+              </MenuItem>
+              <MenuItem key='no' value={'Youtube'}>
+                {'Youtube'}
+              </MenuItem>
+            </TextField>
+          </div>
+          <div>
+            <TextField
+              id="video4"
+              label="Video #4"
+              className={classes.videoField}
+              value={values.video4}
+              onChange={handleChange('video4')}
+              margin="normal"
+            />
+            <TextField
+              id="videoSource4"
+              label="Source"
+              select
+              className={classes.videoSourceField}
+              value={values.videoSource4}
+              onChange={handleChange('videoSource4')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              margin="normal"
+              >
+              <MenuItem key='yes' value={'Vimeo'}>
+                {'Vimeo'}
+              </MenuItem>
+              <MenuItem key='no' value={'Youtube'}>
+                {'Youtube'}
+              </MenuItem>
+            </TextField>
+          </div>
+        </Grid>
+      </form>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
+        <button style={styles.deleteButton} onClick={values.handleOpenModal}>Delete this talent</button>
+        <Link style={{ marginTop : 20, marginRight: 20, marginBottom: 60, marginLeft: 396 }}to='/'><button style={styles.cancelButton}>Cancel</button></Link>
         <button style={styles.editButton} onClick={handleSubmit}>Submit</button>
       </div>
-      </Grid>
-    </form>
+    </>
   );
 }
 
@@ -520,14 +558,16 @@ var styles = {
     color: 'black',
     borderWidth: '1px',
     borderColor: 'black',
-    marginTop : 20,
-    marginRight: 20,
-    marginBottom: 60,
+    // marginTop : 20,
+    // marginRight: 20,
+    // marginBottom: 60,
     paddingTop: 4,
     paddingBottom: 4,
     paddingLeft: 25,
     paddingRight: 25,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    // position: 'relative',
+    // marginLeft: 396
   },
   deleteButton: {
     backgroundColor: '#f70000',
@@ -540,6 +580,7 @@ var styles = {
     paddingLeft: 25,
     paddingRight: 25,
     cursor: 'pointer',
-    float: 'left'
+    position: 'absolute',
+    left: 460
   }
 }
