@@ -22,7 +22,6 @@ class Submission extends React.Component {
       directorContent: '',
       directorContactEmail: '',
       directorContactPhone: '',
-      // directorLabel: '',
       directorContacted: '',
       directorWebsite: '',
       directorVimeo: '',
@@ -69,7 +68,6 @@ class Submission extends React.Component {
           directorContent: data.directorContent,
           directorContactEmail: data.directorContactEmail,
           directorContactPhone: data.directorContactPhone,
-          // directorLabel: data.directorLabel,
           directorContacted: data.directorContacted,
           directorWebsite: data.directorWebsite,
           directorVimeo: data.directorVimeo,
@@ -116,7 +114,7 @@ class Submission extends React.Component {
     if (this.state.redirect) {
       return <Redirect to="/"/>
     }
-    console.log('SUBMISSION states', this.state);
+    // console.log('SUBMISSION states', this.state);
     let formTitle
     this.state.editMode ? formTitle = 'Edit ' + this.state.directorName + "'s profile" : formTitle = 'Submit a new talent.'
 
@@ -137,7 +135,6 @@ class Submission extends React.Component {
             content={this.state.directorContent}
             contactEmail={this.state.directorContactEmail}
             contactPhone={this.state.directorContactPhone}
-            // label={this.state.directorLabel}
             contacted={this.state.directorContacted}
             website={this.state.directorWebsite}
             vimeo={this.state.directorVimeo}

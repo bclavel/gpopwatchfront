@@ -1,7 +1,5 @@
 import React from 'react';
-import { ReactiveBase } from '@appbaseio/reactivesearch';
-import { withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import Header from './header'
 import "../App.css";
 import backEndAddress from '../config';
@@ -20,7 +18,6 @@ class Director extends React.Component {
       directorContent : '',
       directorContactEmail : '',
       directorContactPhone: '',
-      directorLabel: '',
       directorContacted : '',
       directorWebsite : '',
       directorVimeo : '',
@@ -55,7 +52,6 @@ class Director extends React.Component {
         directorContent: data.directorContent,
         directorContactEmail: data.directorContactEmail,
         directorContactPhone: data.directorContactPhone,
-        // directorLabel: data.directorLabel,
         directorContacted: data.directorContacted,
         directorWebsite: data.directorWebsite,
         directorVimeo: data.directorVimeo,
@@ -84,10 +80,9 @@ class Director extends React.Component {
     this.state.directorContent ? directorContent = 'Yes' : directorContent = 'No'
     return (
       <div className = "main-container">
-      {/* <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a"> */}
         <Header isDashboard={this.state.isDashboard} />
         <div style={styles.pictoBack}>
-          <Link to='/'><img style={{width : '30px'}} src="/images/back.jpg" alt="Back"/></Link>
+          <Link to='/dashboard'><img style={{width : '30px'}} src="/images/back.jpg" alt="Back"/></Link>
         </div>
         <div style={styles.directorMain}>
           <div style={styles.directorInfos}>
@@ -129,48 +124,25 @@ class Director extends React.Component {
                 <span className="title" style={styles.directorDataTitle}>Mob.</span>
                 <span className="data" style={styles.directorDataContent}>{this.state.directorContactPhone}</span>
               </div>
-              {/* <div>
-                <ul className='directorDataList' style={styles.directorDataList}>
-                  <li>Localisation.</li>
-                  <li>Category.</li>
-                  <li>Subcategories.</li>
-                  <li>Situation.</li>
-                  <li>Content.</li>
-                  <li>Mail.</li>
-                  <li>Mob.</li>
-                </ul>
-              </div>
-              <div>
-                <ul className='directorDataList' style={styles.directorDataList}>
-                  <li>{this.state.directorLoca}</li>
-                  <li>{this.state.directorCat}</li>
-                  <li>{this.state.directorSubCat}</li>
-                  <li>{this.state.directorSituation}</li>
-                  <li>{this.state.directorContent}</li>
-                  <li>{this.state.directorContactEmail}</li>
-                  <li>{this.state.directorContactPhone}</li>
-                </ul>
-              </div> */}
             </div>
             <Link to={{pathname : '/submission', state : {directorName : directorNameProp}}}><button style={styles.editButton}>Edit</button></Link>
           </div>
           <div style={styles.directorVideos}>
             <h2 style={styles.videoTitle}>Videos.</h2>
-            <div style={styles.videoContent}>
+            <div style={styles.videoContent} className="videoContent">
               {this.state.directorVideos.map((item, i) => {
                 if (item.videoSource === 'Youtube' && item.videoUrl !== '') {
                   var videoUrl = this.extractVideoID(item.videoUrl)
-                  return <iframe width="560" height="315" src={`https://www.youtube.com/embed/${videoUrl}`} key={i} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                  return <iframe width="700" height="393" src={`https://www.youtube.com/embed/${videoUrl}`} key={i} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 } else if (item.videoSource === 'Vimeo' && item.videoUrl !== '') {
                   var videoUrl = this.extractVideoID(item.videoUrl)
-                  return <iframe src={`https://player.vimeo.com/video/${videoUrl}?embedparameter=value`} width="560" height="315" frameBorder="0" allowFullScreen></iframe>
+                  return <iframe src={`https://player.vimeo.com/video/${videoUrl}?embedparameter=value`} width="700" height="393" frameBorder="0" allowFullScreen></iframe>
                 }
               }
               )}
             </div>
           </div>
         </div>
-      {/* </ReactiveBase> */}
       </div>
     );
   }
@@ -196,7 +168,7 @@ var styles = {
   h2 : {
     fontFamily : 'Montserrat',
     fontSize: '16px',
-    marginTop: 0
+    marginTop: 0,
   },
   directorData : {
     display : 'flex',
@@ -205,7 +177,7 @@ var styles = {
     marginTop : '30px'
   },
   directorInfos : {
-    width : '33vw',
+    width : '33%',
     display : 'flex',
     flexDirection : 'column',
     alignItems : 'center',
@@ -218,10 +190,12 @@ var styles = {
     display : 'flex',
   },
   directorVideos : {
-    backgroundColor : 'black',
     position: 'absolute',
-    left: '33vw',
-    minHeight: '100%'
+    left: '33%',
+    top: 72,
+    minHeight: '100%',
+    width: '67%',
+    backgroundColor : 'black',
   },
   directorDataList : {
     listStyleType : 'none',
@@ -248,13 +222,17 @@ var styles = {
   },
   videoTitle : {
     color: 'white',
+    backgroundColor : 'black',
     textAlign : 'center',
     fontWeight : '400',
     fontSize : '20px',
     fontFamily : 'Montserrat'
   },
   videoContent : {
-    textAlign : 'center'
+    textAlign : 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   editButton : {
     backgroundColor : 'black',

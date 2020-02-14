@@ -17,7 +17,7 @@ class Modal extends React.Component {
                         <h2 className="popin__title">Delete talent</h2>
                         <p className="popin__txt">Are you sure?</p>
                         <div className="popin__buttons">
-                            <button className="popin__btn" onClick={this.props.closeModal}>Cancel</button>
+                            <button className="popin__cancel" onClick={this.props.closeModal}>Cancel</button>
                             <button className="popin__btn" onClick={this.props.deleteTalent}>Delete</button>
                         </div>
                     </div>

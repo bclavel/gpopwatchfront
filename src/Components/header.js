@@ -19,7 +19,7 @@ export default class Header extends React.Component {
     return (
         <div style={styles.navBar}>
           <div style={styles.navLogo}>
-            <Link to='/'><img style={{width : '100%'}} alt='G-Pop Watch' src='/images/gpopwatch-logo.jpg' /></Link>
+            <Link to='/dashboard'><img style={{width : '100%'}} alt='G-Pop Watch' src='/images/gpopwatch-logo.jpg' /></Link>
           </div>
           {this.props.isDashboard ? 
             <DataSearch
@@ -31,14 +31,17 @@ export default class Header extends React.Component {
             /> 
           :
           null }
-          <div style={styles.navLinks} className={navLinkGpop}>
-            <a href='/'>Talents G-Pop</a>
+          <div style={styles.navSection}>
+            <div style={styles.navLinks} className={navLinkGpop}>
+              <a href='/'>Talents G-Pop</a>
+            </div>
+            <div style={styles.navLinks} className={navLinkSub}>
+              <Link to='/submission'>Submissions</Link>
+            </div>
+            <img style={{width : '90px', marginLeft: 30, marginTop: 6, marginBottom: 6 }} src="/images/generalpop-logo.png" alt="Général Pop" />
           </div>
-          <div style={styles.navLinks} className={navLinkSub}>
-            <Link to='/submission'>Submissions</Link>
-          </div>
-          <img style={{width : '90px', marginLeft: 30, marginTop: 6, marginBottom: 6 }} src="/images/generalpop-logo.png" alt="Général Pop" />
         </div>
+
     );
   }
 }
@@ -47,7 +50,7 @@ var styles = {
   navBar : {
     backgroundColor : 'black',
     display : 'flex',
-    justifyContent : 'flex-start',
+    justifyContent : 'space-between',
     alignItems : 'center',
     position: 'fixed',
     zIndex: 1,
@@ -67,4 +70,10 @@ var styles = {
     textTransform: 'uppercase',
     marginLeft : '50px'
   },
+  navSection : {
+    display : 'flex',
+    justifyContent : 'center',
+    alignItems : 'center',
+    marginRight: 50
+  }
 }

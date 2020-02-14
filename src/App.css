@@ -136,3 +136,23 @@ h2 {
   border: 0;
   pointer-events: initial;
 }
+
+.popin__cancel {
+  display: block;
+  float: left;
+  background-color: white;
+  color: black;
+  padding: 5px 20px;
+  margin: 6px 0 6px 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background .3s;
+  cursor: pointer;
+  -webkit-appearance: none;
+  border: 1px solid black;
+  pointer-events: initial;
+}
+
+.videoContent > * {
+  margin: 10px 0;
+}

@@ -10,8 +10,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
-import Snackbar from '@material-ui/core/Snackbar';
-// import MuiAlert from '@material-ui/lab/Alert';
+import Snackbar from './snackbar';
 import backEndAddress from '../config';
 
 const categories = [
@@ -38,11 +37,7 @@ const categories = [
   },
 ];
 
-const profilesList = ['Director', 'DOP', 'Make up', 'Stylist', 'Hair', 'Line prod', 'Art Dir', 'Steadicam', 'Ass Cam', 'DIT', 'Gaffer', 'Grip', 'Set designer', 'SFX', 'Choreographer', 'Food Stylist', 'Motion designer']
-
-// function Alert(props) {
-//   return <MuiAlert elevation={6} variant="filled" {...props} />;
-// }
+const profilesList = ['Director', 'Print', 'DOP', 'Make up', 'Stylist', 'Hair', 'Line prod', 'Art Dir', 'Steadicam', 'Ass Cam', 'DIT', 'Gaffer', 'Grip', 'Set designer', 'SFX', 'Choreographer', 'Food Stylist', 'Motion designer']
 
 export default function SubmitForm(props) {
   const classes = useStyles();
@@ -55,7 +50,6 @@ export default function SubmitForm(props) {
     content : props.content,
     contactEmail : props.contactEmail,
     contactPhone : props.contactPhone,
-    label : props.label,
     contacted : props.contacted,
     website : props.website,
     vimeo : props.vimeo,
@@ -84,7 +78,6 @@ export default function SubmitForm(props) {
       content : props.content,
       contactEmail : props.contactEmail,
       contactPhone : props.contactPhone,
-      label : props.label,
       contacted : props.contacted,
       website : props.website,
       vimeo : props.vimeo,
@@ -110,6 +103,16 @@ export default function SubmitForm(props) {
 
   const [profiles, setProfiles] = React.useState([]);
 
+  const [openSnack, setSnackOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackOpen(false);
+  };
+
   const handleChangeSimple = event => {
     setProfiles(event.target.value);
   };
@@ -127,6 +130,7 @@ export default function SubmitForm(props) {
       })
       .then(function (data) {
         console.log('UPDATE DIRECTOR - fetch data >>', data)
+        setSnackOpen(true);
       })
     }
   } else {
@@ -142,61 +146,14 @@ export default function SubmitForm(props) {
       })
       .then(function (data) {
         console.log('CREATE DIRECTOR - fetch data >>', data)
+        setValues({...initData})
+        setProfiles([])
+        setSnackOpen(true);
       })
     }
   }
 
-
-
-  // handleModal = (bool, origin, form) => {
-	// 	if (bool) {
-	// 		this.setState({
-	// 			popin: bool,
-	// 			popinClosing: false,
-	// 			popinTarget: origin,
-	// 			deletedForm : form
-	// 		})
-	// 	} else if (bool) {
-	// 		// on popin opening
-	// 		this.setState({
-	// 			popin: bool,
-	// 			popinClosing: false,
-	// 			popinTarget: origin
-	// 		})
-	// 	} else {
-	// 		// on popin closing
-	// 		this.setState({
-	// 			popinClosing: true
-	// 		}, _=> {
-	// 			setTimeout(() => {
-	// 				this.setState({
-	// 					popin: bool,
-	// 					popinTarget: origin,
-	// 					deletedForm: {}
-	// 				})
-	// 			}, 400);
-	// 		})
-	// 	}
-	// }
-
-	// handleDeleteTalent = () => {
-	// 	let filteredData = this.state.answers.filter(item => (
-	// 		item.form.id !== this.state.deletedForm.id
-	// 	))
-	// 	this.setState({answers : filteredData}
-	// 		,_=> {
-	// 		this.setState({
-	// 			popinClosing: true
-	// 		}, _=> {
-	// 			setTimeout(() => {
-	// 				this.setState({
-	// 					popin: false,
-	// 					popinTarget: null,
-	// 				})
-	// 			}, 400);
-	// 		})
-	// 	})
-  // }
+  // console.log('SUBMITFORM values', values)
 
   return (
     <>
@@ -355,27 +312,6 @@ export default function SubmitForm(props) {
               {'No'}
             </MenuItem>
           </TextField>
-          {/* <TextField
-            id="label"
-            label="Label"
-            select
-            className={classes.textField}
-            value={values.label}
-            onChange={handleChange('label')}
-            SelectProps={{
-              MenuProps: {
-                className: classes.menu,
-              },
-            }}
-            margin="normal"
-            >
-            <MenuItem key='yes' value={true}>
-              {'Yes'}
-            </MenuItem>
-            <MenuItem key='no' value={false}>
-              {'No'}
-            </MenuItem>
-          </TextField> */}
           <h2 style={{textAlign : 'center', marginTop : 40}}>Videos</h2>
           <div>
             <TextField
@@ -504,10 +440,11 @@ export default function SubmitForm(props) {
         </Grid>
       </form>
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
-        <button style={styles.deleteButton} onClick={values.handleOpenModal}>Delete this talent</button>
-        <Link style={{ marginTop : 20, marginRight: 20, marginBottom: 60, marginLeft: 396 }}to='/'><button style={styles.cancelButton}>Cancel</button></Link>
+        {props.editMode ? <button style={styles.deleteButton} onClick={values.handleOpenModal}>Delete this talent</button> : null }
+        <Link style={{ marginTop : 20, marginRight: 20, marginBottom: 60, marginLeft: 396 }} to='/dashboard'><button style={styles.cancelButton}>Cancel</button></Link>
         <button style={styles.editButton} onClick={handleSubmit}>Submit</button>
       </div>
+      <Snackbar displaySnackbar={openSnack} onClose={handleClose} action={props.editMode ? 'edited' : 'created'} />
     </>
   );
 }
