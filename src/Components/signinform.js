@@ -51,7 +51,7 @@ export default function SubmitSignin(props) {
     return (
         <>
         <form className={classes.container} autoComplete="off">
-            <Grid container justify="flex-start" direction="column" alignItems="center" spacing={3}>
+            <Grid container justify="flex-start" direction="column" alignItems="center" spacing={0}>
             <TextField
                 id="userName"
                 label="Username"
@@ -74,7 +74,7 @@ export default function SubmitSignin(props) {
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
                 <button style={styles.editButton} onClick={handleSubmit}>Submit</button>
             </div>
-            <p>{signinError}</p>
+            {/* <p>{signinError}</p> */}
         </>
     );
   }
@@ -114,7 +114,7 @@ var styles = {
     color: 'white',
     borderStyle: 'none',
     marginTop: 20,
-    marginBottom: 60,
+    marginBottom: 20,
     paddingTop: 4,
     paddingBottom: 4,
     paddingLeft: 25,

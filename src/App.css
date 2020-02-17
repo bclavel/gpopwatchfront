@@ -156,3 +156,7 @@ h2 {
 .videoContent > * {
   margin: 10px 0;
 }
+
+.signin__txt a {
+  color: black
+}
