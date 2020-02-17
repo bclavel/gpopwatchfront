@@ -33,7 +33,7 @@ export default class Header extends React.Component {
           null }
           <div style={styles.navSection}>
             <div style={styles.navLinks} className={navLinkGpop}>
-              <a href='/'>Talents G-Pop</a>
+              <Link to='/dashboard'>Talents G-Pop</Link>
             </div>
             <div style={styles.navLinks} className={navLinkSub}>
               <Link to='/submission'>Submissions</Link>

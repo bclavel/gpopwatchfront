@@ -22,7 +22,7 @@ class Director extends React.Component {
           <img style={styles.logo} alt='G-Pop Watch' src='/images/gpopwatch-logo.jpg' />
         </div>
         <div style={styles.formContainer}>
-          <h1 style={styles.h1}>Sigin in.</h1>
+          <h1 style={styles.h1}>Sign in.</h1>
           <SigninForm />
           <p className='signin__txt' style={styles.txt}>If you need access to the platform, please contact the <a href='mailto:jpkraft@betc.com'>administrator</a></p>
         </div>
