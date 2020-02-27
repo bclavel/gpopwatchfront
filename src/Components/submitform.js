@@ -37,7 +37,7 @@ const categories = [
   },
 ];
 
-const profilesList = ['Director', 'Print', 'DOP', 'Make up', 'Stylist', 'Hair', 'Line prod', 'Art Dir', 'Steadicam', 'Ass Cam', 'DIT', 'Gaffer', 'Grip', 'Set designer', 'SFX', 'Choreographer', 'Food Stylist', 'Motion designer']
+const profilesList = ['Director', 'Print', 'DOP', 'Make up', 'Stylist', 'Hair', 'Line prod', 'Art Dir', 'Steadicam', 'Ass Cam', 'DIT', 'Gaffer', 'Grip', 'Set designer', 'SFX', 'Choreographer', 'Food Stylist', 'Motion designer', 'Storyboarder', 'Dir cast', 'Dresseur', 'Monteur', 'Flamist', 'Etalonneur', 'Graphiste', 'Mate Painter']
 
 export default function SubmitForm(props) {
   const classes = useStyles();
@@ -119,7 +119,6 @@ export default function SubmitForm(props) {
 
   if (props.editMode) {
     var handleSubmit = function() {
-      console.log('Submit update director');
       fetch(`${backEndAddress}/updatedirector`, {
        method: 'POST',
        headers: {'Content-Type':'application/x-www-form-urlencoded'},
@@ -129,13 +128,11 @@ export default function SubmitForm(props) {
         return response.json()
       })
       .then(function (data) {
-        console.log('UPDATE DIRECTOR - fetch data >>', data)
         setSnackOpen(true);
       })
     }
   } else {
     handleSubmit = function() {
-      console.log('Submit create director');
       fetch(`${backEndAddress}/createdirector`, {
        method: 'POST',
        headers: {'Content-Type':'application/x-www-form-urlencoded'},
@@ -145,7 +142,6 @@ export default function SubmitForm(props) {
         return response.json()
       })
       .then(function (data) {
-        console.log('CREATE DIRECTOR - fetch data >>', data)
         setValues({...initData})
         setProfiles([])
         setSnackOpen(true);

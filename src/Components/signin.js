@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import Header from './header'
 import SigninForm from './signinform'
 import "../App.css";
 
@@ -15,16 +14,15 @@ class Director extends React.Component {
 
 
   render() {
-    // console.log('SIGNIN states', this.state);
     return (
       <div style={styles.mainContainer}>
         <div style={styles.header}>
-          <img style={styles.logo} alt='G-Pop Watch' src='/images/gpopwatch-logo.jpg' />
+          <img style={styles.logo} alt='G-Pop Watch' src='/images/talentswatch-logo.jpg' />
         </div>
         <div style={styles.formContainer}>
           <h1 style={styles.h1}>Sign in.</h1>
           <SigninForm />
-          <p className='signin__txt' style={styles.txt}>If you need access to the platform, please contact the <a href='mailto:jpkraft@betc.com'>administrator</a></p>
+          <p className='signin__txt' style={styles.txt}>If you need access to the platform, please contact the administrator</p>
         </div>
       </div>
     );

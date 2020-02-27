@@ -34,7 +34,6 @@ class Director extends React.Component {
       return response.json()
     })
     .then(function (data) {
-      console.log('GET DIRECTOR - fetch data >>', data)
       var subCatData = data.directorSubCat.map((element, i) => {
         return element.subCatLabel
       })
@@ -72,7 +71,6 @@ class Director extends React.Component {
   }
 
   render() {
-    // console.log('DIRECTOR states', this.state);
     var directorNameProp = this.state.directorName
     const directorProfileString = this.state.directorProfile.join(' ')
     var directorContacted, directorContent
@@ -192,7 +190,7 @@ var styles = {
   directorVideos : {
     position: 'absolute',
     left: '33%',
-    top: 72,
+    top: 70,
     minHeight: '100%',
     width: '67%',
     backgroundColor : 'black',

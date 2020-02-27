@@ -6,7 +6,7 @@ import "../App.css";
 export default class Header extends React.Component {
   render() {
     var navLinkGpop, navLinkSub
-    if (this.props.currentPage === '/') {
+    if (this.props.currentPage === '/dashboard') {
       navLinkGpop = 'navLinksOn'
       navLinkSub = 'navLinks'
     } else if (this.props.currentPage === '/submission/') {
@@ -19,7 +19,7 @@ export default class Header extends React.Component {
     return (
         <div style={styles.navBar}>
           <div style={styles.navLogo}>
-            <Link to='/dashboard'><img style={{width : '100%'}} alt='G-Pop Watch' src='/images/gpopwatch-logo.jpg' /></Link>
+            <Link to='/dashboard'><img style={{width : '250px'}} alt='G-Pop Watch' src='/images/talentswatch-logo.jpg' /></Link>
           </div>
           {this.props.isDashboard ? 
             <DataSearch
@@ -27,18 +27,17 @@ export default class Header extends React.Component {
               dataField = {["name"]}
               className = "search-bar"
               queryFormat = "and"
-              placeholder = "Search for a director"
+              placeholder = "Search for a talent"
             /> 
           :
           null }
           <div style={styles.navSection}>
-            <div style={styles.navLinks} className={navLinkGpop}>
-              <Link to='/dashboard'>Talents G-Pop</Link>
+            <div style={styles.navLinksTal} className={navLinkGpop}>
+              <Link to='/dashboard'>Talents</Link>
             </div>
-            <div style={styles.navLinks} className={navLinkSub}>
+            <div style={styles.navLinksSub} className={navLinkSub}>
               <Link to='/submission'>Submissions</Link>
             </div>
-            <img style={{width : '90px', marginLeft: 30, marginTop: 6, marginBottom: 6 }} src="/images/generalpop-logo.png" alt="Général Pop" />
           </div>
         </div>
 
@@ -59,21 +58,28 @@ var styles = {
   },
   navLogo : {
     width : '200px',
-    marginTop : '14px',
-    marginBottom : '10px',
-    marginLeft: '10px',
+    marginTop : '25px',
+    marginBottom : '20px',
+    marginLeft: '20px',
     marginRight : '30px'
   },
-  navLinks : {
+  navLinksTal : {
     color : 'white',
     fontWeight : 'bold',
     textTransform: 'uppercase',
-    marginLeft : '50px'
+    fontSize: 18
+  },
+  navLinksSub : {
+    color : 'white',
+    fontWeight : 'bold',
+    textTransform: 'uppercase',
+    marginLeft : '50px',
+    fontSize: 18
   },
   navSection : {
     display : 'flex',
     justifyContent : 'center',
     alignItems : 'center',
-    marginRight: 50
+    marginRight: 120
   }
 }

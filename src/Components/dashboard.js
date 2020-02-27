@@ -7,7 +7,6 @@ import "../App.css";
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    console.log('this.props', this.props);
     this.state = {
       currentPage : this.props.match.path,
       isDashboard: true
@@ -39,10 +38,10 @@ class Dashboard extends React.Component {
                 className="categories-filter"
                 size={5}
                 sortBy="asc"
-                queryFormat="and"
+                queryFormat="or"
                 selectAllLabel="All categories"
                 showCheckbox={true}
-                showCount={false}
+                showCount={true}
                 showSearch={false}
                 placeholder="Search for a category"
                 react={{
@@ -108,7 +107,7 @@ class Dashboard extends React.Component {
             <div style={styles.results}>
               <ReactiveList
                 componentId="searchResult"
-                dataField="firstName.keyword"
+                dataField="name.keyword"
                 stream={true}
                 pagination={false}
                 paginationAt="bottom"

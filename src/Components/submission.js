@@ -1,5 +1,4 @@
 import React from 'react';
-// import { ReactiveBase } from '@appbaseio/reactivesearch';
 import { withRouter, Redirect } from "react-router-dom";
 import Header from './header'
 import Form from './submitform'
@@ -49,7 +48,6 @@ class Submission extends React.Component {
         return response.json()
       })
       .then(function (data) {
-        console.log('GET DIRECTOR - fetch data >>', data)
         var subCatData = data.directorSubCat.map(item => {
           return item.subCatLabel
         })
@@ -93,7 +91,6 @@ class Submission extends React.Component {
       return response.json()
     })
     .then(function (data) {
-      console.log('DELETE DIRECTOR - fetch data >>', data)
       ctx.setState({modalOpen: false, redirect: true});
     })
   }
@@ -114,43 +111,40 @@ class Submission extends React.Component {
     if (this.state.redirect) {
       return <Redirect to="/"/>
     }
-    // console.log('SUBMISSION states', this.state);
     let formTitle
     this.state.editMode ? formTitle = 'Edit ' + this.state.directorName + "'s profile" : formTitle = 'Submit a new talent.'
 
     return (
       <div className="main-container">
-        {/* <ReactiveBase app = "gpop-data2" credentials = "MRwR0u06C:c0903d48-7bad-4a8f-ae7f-c5c1e0b8bb9a"> */}
-          <Header currentPage={this.state.currentPage} isDashboard={this.state.isDashboard}/>
-          <h1 style={styles.h1}>{formTitle}</h1>
-          <Form
-            editMode={this.state.editMode}
-            oldName={this.state.directorName}
-            name={this.state.directorName}
-            category={this.state.directorCat}
-            localisation={this.state.directorLoca}
-            subcategories={this.state.directorSubCat}
-            profiles={this.state.directorProfile}
-            situation={this.state.directorSituation}
-            content={this.state.directorContent}
-            contactEmail={this.state.directorContactEmail}
-            contactPhone={this.state.directorContactPhone}
-            contacted={this.state.directorContacted}
-            website={this.state.directorWebsite}
-            vimeo={this.state.directorVimeo}
-            insta={this.state.directorInsta}
-            video1={this.state.directorVideo1}
-            videoSource1={this.state.directorVideoSource1}
-            video2={this.state.directorVideo2}
-            videoSource2={this.state.directorVideoSource2}
-            video3={this.state.directorVideo3}
-            videoSource3={this.state.directorVideoSource3}
-            video4={this.state.directorVideo4}
-            videoSource4={this.state.directorVideoSource4}
-            handleOpenModal={this.handleOpenModal}
-          />
-          <Modal isOpen={this.state.modalOpen} closeModal={this.handleCloseModal} deleteTalent={this.handleDeleteTalent}/>
-        {/* </ReactiveBase> */}
+        <Header currentPage={this.state.currentPage} isDashboard={this.state.isDashboard}/>
+        <h1 style={styles.h1}>{formTitle}</h1>
+        <Form
+          editMode={this.state.editMode}
+          oldName={this.state.directorName}
+          name={this.state.directorName}
+          category={this.state.directorCat}
+          localisation={this.state.directorLoca}
+          subcategories={this.state.directorSubCat}
+          profiles={this.state.directorProfile}
+          situation={this.state.directorSituation}
+          content={this.state.directorContent}
+          contactEmail={this.state.directorContactEmail}
+          contactPhone={this.state.directorContactPhone}
+          contacted={this.state.directorContacted}
+          website={this.state.directorWebsite}
+          vimeo={this.state.directorVimeo}
+          insta={this.state.directorInsta}
+          video1={this.state.directorVideo1}
+          videoSource1={this.state.directorVideoSource1}
+          video2={this.state.directorVideo2}
+          videoSource2={this.state.directorVideoSource2}
+          video3={this.state.directorVideo3}
+          videoSource3={this.state.directorVideoSource3}
+          video4={this.state.directorVideo4}
+          videoSource4={this.state.directorVideoSource4}
+          handleOpenModal={this.handleOpenModal}
+        />
+        <Modal isOpen={this.state.modalOpen} closeModal={this.handleCloseModal} deleteTalent={this.handleDeleteTalent}/>
       </div>
     );
   }

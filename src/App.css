@@ -17,12 +17,12 @@ body {
 }
 
 .navLinks hover {
-  color : #f70000;
+  color : #a41f20;
   text-decoration:  none;
 }
 
 .navLinksOn a {
-  color : #f70000;
+  color : #a41f20;
   text-decoration:  none;
 }
 
@@ -40,7 +40,7 @@ h2 {
 }
 
 .directorName hover {
-  color : #f70000;
+  color : #a41f20;
   text-decoration: none;
 }
 
@@ -124,7 +124,7 @@ h2 {
 .popin__btn {
   display: block;
   float: left;
-  background-color: #f70000;
+  background-color: #a41f20;
   color: white;
   padding: 5px 20px;
   margin: 6px 0 6px 5px;
