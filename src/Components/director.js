@@ -190,7 +190,7 @@ var styles = {
   directorVideos : {
     position: 'absolute',
     left: '33%',
-    top: 70,
+    top: 68,
     minHeight: '100%',
     width: '67%',
     backgroundColor : 'black',
