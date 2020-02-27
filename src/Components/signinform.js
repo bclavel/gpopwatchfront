@@ -22,9 +22,8 @@ export default function SubmitSignin(props) {
 
   const [session, setSession] = useState(false);
 
-
-  var handleSubmit = function() {
-    console.log('Submit signin');
+  var handleSubmit = function(event) {
+    event.preventDefault();
     fetch(`${backEndAddress}/signin`, {
         method: 'POST',
         headers: {'Content-Type':'application/x-www-form-urlencoded'},
@@ -34,9 +33,7 @@ export default function SubmitSignin(props) {
       return response.json()
     })
     .then(function (data) {
-      console.log('GET DIRECTOR - fetch data >>', data)
       if (data) {
-          console.log('Go !');
           setSession(true)
         return 
       } else {
@@ -50,7 +47,7 @@ export default function SubmitSignin(props) {
   } else {
     return (
         <>
-        <form className={classes.container} autoComplete="off">
+        <form className={classes.container} autoComplete="off" id="signinform">
             <Grid container justify="flex-start" direction="column" alignItems="center" spacing={0}>
             <TextField
                 id="userName"
@@ -72,7 +69,7 @@ export default function SubmitSignin(props) {
             </Grid>
             </form>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
-                <button style={styles.editButton} onClick={handleSubmit}>Submit</button>
+                <button style={styles.editButton} onClick={handleSubmit} form="signinform" >Submit</button>
             </div>
             {/* <p>{signinError}</p> */}
         </>

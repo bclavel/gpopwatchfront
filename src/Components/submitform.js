@@ -40,6 +40,8 @@ const categories = [
 const profilesList = ['Director', 'Print', 'DOP', 'Make up', 'Stylist', 'Hair', 'Line prod', 'Art Dir', 'Steadicam', 'Ass Cam', 'DIT', 'Gaffer', 'Grip', 'Set designer', 'SFX', 'Choreographer', 'Food Stylist', 'Motion designer', 'Storyboarder', 'Dir cast', 'Dresseur', 'Monteur', 'Flamist', 'Etalonneur', 'Graphiste', 'Mate Painter']
 
 export default function SubmitForm(props) {
+  console.log('SUBMITFORM props', props);
+  
   const classes = useStyles();
   var initData = {
     name: props.name,
@@ -118,7 +120,8 @@ export default function SubmitForm(props) {
   };
 
   if (props.editMode) {
-    var handleSubmit = function() {
+    var handleSubmit = function(event) {
+      event.preventDefault();
       fetch(`${backEndAddress}/updatedirector`, {
        method: 'POST',
        headers: {'Content-Type':'application/x-www-form-urlencoded'},
@@ -132,7 +135,8 @@ export default function SubmitForm(props) {
       })
     }
   } else {
-    handleSubmit = function() {
+    handleSubmit = function(event) {
+      event.preventDefault();
       fetch(`${backEndAddress}/createdirector`, {
        method: 'POST',
        headers: {'Content-Type':'application/x-www-form-urlencoded'},
@@ -153,7 +157,7 @@ export default function SubmitForm(props) {
 
   return (
     <>
-      <form className={classes.container} autoComplete="off">
+      <form className={classes.container} autoComplete="off" id="submitform">
         <Grid container justify="flex-start" direction="column" alignItems="center" spacing={3}>
           <TextField
             id="name"
@@ -438,9 +442,9 @@ export default function SubmitForm(props) {
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
         {props.editMode ? <button style={styles.deleteButton} onClick={values.handleOpenModal}>Delete this talent</button> : null }
         <Link style={{ marginTop : 20, marginRight: 20, marginBottom: 60, marginLeft: 396 }} to='/dashboard'><button style={styles.cancelButton}>Cancel</button></Link>
-        <button style={styles.editButton} onClick={handleSubmit}>Submit</button>
+        <button style={styles.editButton} onClick={handleSubmit} form="submitform">Submit</button>
       </div>
-      <Snackbar displaySnackbar={openSnack} onClose={handleClose} action={props.editMode ? 'edited' : 'created'} />
+      <Snackbar displaySnackbar={openSnack} director={values.name} onClose={handleClose} action={props.editMode ? 'edited' : 'created'} />
     </>
   );
 }

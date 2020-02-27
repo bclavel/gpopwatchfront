@@ -69,6 +69,7 @@ class Dashboard extends React.Component {
               componentId="localisationSensor"
               dataField="localisation.keyword"
               title="Localisation"
+              className="categories-filter"
             />
             <SingleDropdownList
               componentId="contentSensor"
@@ -80,6 +81,12 @@ class Dashboard extends React.Component {
               componentId="situationSensor"
               dataField="situation.keyword"
               title="Situation"
+              className="categories-filter"
+            />
+            <MultiDropdownList
+              componentId="pouetSensor"
+              dataField="pouet.keyword"
+              title="Pouet"
             />
             <SelectedFilters />
           </div>

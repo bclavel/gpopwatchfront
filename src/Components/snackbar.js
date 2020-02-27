@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -21,12 +22,9 @@ export default function CustomizedSnackbars(props) {
 
   return (
     <div className={classes.root}>
-      {/* <Button variant="outlined" onClick={handleClick}>
-        Open success snackbar
-      </Button> */}
       <Snackbar open={props.displaySnackbar} autoHideDuration={6000} onClose={props.onClose}>
         <Alert onClose={props.onClose} severity="success">
-          The talent has been successfully {props.action}
+          {props.director} has been successfully {props.action} <Link to={`/director/${props.director}`}>View the talent</Link>
         </Alert>
       </Snackbar>
     </div>
