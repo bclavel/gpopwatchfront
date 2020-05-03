@@ -15,7 +15,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className = "main-container">
-      <ReactiveBase app = "gpop-proto" credentials = "tYSvLruZB:0fbef864-3abb-4535-951f-3b64a7e6d2fey">
+      <ReactiveBase app = "gpop-proto" credentials = "48eZrtagZ:f664665a-326a-4a4a-8b60-23a09844f236">
         <Header currentPage={this.state.currentPage} isDashboard={this.state.isDashboard}/>
         <div style={styles.header}>
           <div style={styles.h1}>
